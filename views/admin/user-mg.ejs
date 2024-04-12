@@ -82,14 +82,16 @@
                         <td><%= user.email %></td>
                         <td>
                             <button class="btn btn-light">
-                            <a href="#" class="user-action-link" data-action="<%= user.blocked ? 'unblock' : 'block' %>" data-user-id="<%= user._id %>">
-                                <% if (user.blocked) { %>
-                                    <i class="fas fa-lock-open"></i> Unblock
-                                <% } else { %>
-                                    <i class="fas fa-lock"></i> Block
-                                <% } %>
+                            <a href="/user-block/"<%= user._id %> >
                                 
-                            </a>
+                                    <i class="fas fa-lock-open"></i> Unblock
+                                </a>
+
+                                <a href="/user-unblock/<%= user._id %>"></a>
+                                    <i class="fas fa-lock"></i> Block
+                              
+                                
+                            
                         </button>
                         </td>
                     </tr>

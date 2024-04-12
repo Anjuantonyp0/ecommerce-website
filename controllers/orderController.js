@@ -8,6 +8,11 @@ const Razorpay = require('razorpay');
 const Wallet = require('../models/walletSchema');
 const { Transaction } = require('../models/transaction');
 var easyinvoice = require('easyinvoice');
+const keyId = process.env.KEY_ID;
+const secretRazo = process.env.SECRET_RAZO;
+var instance = new Razorpay({ key_id: 'rzp_test_ewEoYdEGpdK0FQ',key_secret: 'rtJX2nv4XPVAZ9ZrY5Wrepyx',});
+
+
 const getCategory = async (req, res) => {
   try {
     const categories = await Category.find({ active: true });
@@ -20,10 +25,18 @@ const getCategory = async (req, res) => {
     console.log(error.message);
   }
 };
-//////////////////////////////////////////////////////////////////USER SIDE/////////////////////////////////////
-const keyId = process.env.KEY_ID;
-const secretRazo = process.env.SECRET_RAZO;
-var instance = new Razorpay({ key_id: 'rzp_test_ewEoYdEGpdK0FQ',key_secret: 'rtJX2nv4XPVAZ9ZrY5Wrepyx',});
+
+
+
+// -------------------------------------------------------------
+// =========================== USER  SIDE======================>
+// -------------------------------------------------------------
+
+
+
+
+
+// -----------CHECKOUT----------------->
 module.exports.checkoutAjaxAddress = async (req, res) => {
     try {
         const addressId = req.body.selectedAddress;
@@ -64,6 +77,9 @@ module.exports.checkoutAjaxAddress = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+
+// -----------VERIFY PAYMENT ----------------->
 module.exports.verifyPayment = async (req, res) => {
   try {
       const details = req.body;
@@ -90,6 +106,8 @@ module.exports.verifyPayment = async (req, res) => {
   }
 };
 
+
+// -----------PAYMENT CHECKOUT----------------->
 module.exports.PaymentCheckout = async(req,res)=>{
   try {
       const orderId = req.body.orderId;
@@ -106,8 +124,9 @@ module.exports.PaymentCheckout = async(req,res)=>{
       console.log('Try catch error in PaymentCheckout ');
       console.log(error.message);
     }
-    }
+}
 
+// -----------PAYMENT CHECKOUT----------------->  
 module.exports.paymentfailed = async(req,res)=>{
   try {
     const id = req.params.id;
@@ -124,6 +143,8 @@ module.exports.paymentfailed = async(req,res)=>{
   }
 };
 
+
+// -----------ORDER SUCCESS PAGE RENDERING----------------->
 module.exports.placeorder = async (req, res) => {
     try {
       const order = await Order.findById(req.params.id).populate('items.product');
@@ -146,6 +167,9 @@ module.exports.placeorder = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+// -----------VIEW ORDER DETAILS----------------->
 module.exports.vieworderdetails = async (req, res) => {
     try {
         const category = await Category.find({ active: true });
@@ -163,6 +187,9 @@ module.exports.vieworderdetails = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+
+// -----------VIEW ORDER DETAILS----------------->
 module.exports.SingleOrderDetail = async (req, res) => {
     try {
         const orderId = req.params.id;
@@ -175,18 +202,19 @@ module.exports.SingleOrderDetail = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
+// -----------CANCEL ORDER----------------->
 module.exports.orderCancel = async (req, res) => {
     try {
         const userId = req.session.user._id;
         const orderId = req.params.id;
           console.log('Order cancellation');
         const transactionDb = await Transaction.findOne({ userId: userId });
-// Find the order by ID and update its status to canceled
         const cancelOrder = await Order.findOneAndUpdate({ _id: orderId, userId: userId}, {$set: {canceled: true,status: "Canceled"}} );
           if (!cancelOrder) {
             return res.redirect('/view-order-details');
         }
-// If payment method is Razorpay, refund the amount to the user's wallet
           if (cancelOrder.payment === 'Razorpay') {
             let wallet = await Wallet.findOne({ userId});
           if (!wallet) {
@@ -212,6 +240,9 @@ module.exports.orderCancel = async (req, res) => {
         return res.status(500).send('Internal Server Error');
     }
 };
+
+
+// -----------RETURN REQUEST----------------->
 module.exports.returnRequest = async (req, res) => {
   try {
     const id = req.params.id;
@@ -228,6 +259,9 @@ module.exports.returnRequest = async (req, res) => {
     res.status(500).send('Internal ServerError');
  }
 };
+
+
+// -----------WALLET PAGE RENDERING----------------->
 module.exports.walletPage = async (req, res) => {
     try {
       const userId = req.session.user._id;
@@ -247,6 +281,9 @@ module.exports.walletPage = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+// -----------WALLET USAGE----------------->
 module.exports.walletUsage = async (req, res) => {
   try {
     const orderId = req.params.id;
@@ -272,7 +309,7 @@ module.exports.walletUsage = async (req, res) => {
 };
 
 
-
+// -----------INVOICE DOWNLOADING--------------->
 module.exports.invoiceDownload= async (req, res) => {
   try {
   
@@ -297,22 +334,25 @@ module.exports.invoiceDownload= async (req, res) => {
 
 
 
-/////////////////////////admin side//////////////////////////////////////////////////////////
+// -------------------------------------------------------------
+// =========================== USER  SIDE======================>
+// -------------------------------------------------------------
+
+
+
+
+
+
+
+// -----------ORDER MANAGEMENT IN ADMIN SIDE--------------->
 module.exports.orderManagement =  async (req, res) => {
     try {
-      //constorderId = req.params.orderid;
-   
-     
-   
       const order = await Order.find().populate('items.product').sort({_id: -1});
       console.log(order);
    
       if (!order) {
         console.log("no order is available....")
       }
-   
-    //    console.log(order.items)
-      // Render the order details page with the retrieved order
       res.render('admin/orderMgt', { order: order });
     } catch (error) {
       console.error(error);

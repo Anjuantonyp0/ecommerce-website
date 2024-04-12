@@ -2,6 +2,7 @@
     "recommendations": [
         "digitalbrainstem.javascript-ejs-support",
         "esbenp.prettier-vscode",
-        "github.vscode-pull-request-github"
+        "github.vscode-pull-request-github",
+        "github.copilot"
     ]
 }

@@ -71,6 +71,8 @@ const { checkoutAjaxAddress,
 
 const { useCoupon, coupons } = require("../controllers/couponController");
 
+const app = express()
+
 const { wishlistPage, 
      productAddToWishlist,
      removeWishlistProduct,
@@ -80,21 +82,25 @@ const { wishlistPage,
 
 router.use(nocache())
 
-router.get('/home', home);
 
-router.get('/shop', shop);
 
 router.get('/', signupPage);
 
 router.post('/', signup)
 
+router.get('/login', loginPage)
+
 router.get('/loadOtpPage', otpPage)
 
 router.post("/verify/:userId", userSessionCheck, verifyOtp);
 
-router.get('/login', loginPage)
 
 router.post('/loginVerify', loginVerify);
+
+router.use(blockChecker);
+router.get('/home', home);
+
+router.get('/shop', shop);
 
 router.get('/product-detail', productDetail)
 

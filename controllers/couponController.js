@@ -32,7 +32,16 @@ const checkAndUpdateExpiredCoupons = async () => {
         console.error("Error checking and updating expired coupons:", error);
     }
 };
-////////////////////////////////////user side///////////////////////////////
+// -------------------------------------------------------------
+// =========================== USER  SIDE======================>
+// -------------------------------------------------------------
+
+
+
+
+
+
+// -----------USE COUPON ----------------->
 module.exports.useCoupon = async (req, res) => {
     try {
         console.log(req.body.code)
@@ -67,6 +76,9 @@ module.exports.useCoupon = async (req, res) => {
         res.status(500).send({ error: 'Internal Server Error' });
     }
 };
+
+
+// -----------COUPON PAGE RENDERING ----------------->
 module.exports.coupons = async (req, res) => {
     try {
         const user = req.session.user
@@ -80,7 +92,16 @@ module.exports.coupons = async (req, res) => {
         console.log(error.message);
     }
 };
-///////////////////////////////////////////////ADMIN SIDE///////////////////////////////////////////////////////
+// -------------------------------------------------------------
+// =========================== ADMIN  SIDE======================>
+// -------------------------------------------------------------
+
+
+
+
+
+
+// -----------COUPON MANAGEMENT RENDERING ----------------->
 module.exports.couponManage = async (req, res) => {
     try {
         const coupon = await Coupon.find({}).sort({ _id: -1 });
@@ -90,6 +111,9 @@ module.exports.couponManage = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+// -----------COUPON ADD RENDERING ----------------->
 module.exports.addCouponPage = async (req, res) => {
     try {
         checkAndUpdateExpiredCoupons();
@@ -99,6 +123,9 @@ module.exports.addCouponPage = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+// -----------COUPON GENERATING ----------------->
 module.exports.generateCoupon = async (req, res) => {
     try {
         let codeC = couponCode.generate({ parts: 2 });
@@ -108,6 +135,9 @@ module.exports.generateCoupon = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+// -----------COUPON ADD ADMIN ----------------->
 module.exports.addCoupon = async (req, res) => {
     try {
         const newCoupon = new Coupon({
@@ -128,6 +158,9 @@ module.exports.addCoupon = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+// -----------COUPON DELETE ----------------->
 module.exports.deleteCoupon = async (req, res) => {
     try {
         let id = req.params.id;

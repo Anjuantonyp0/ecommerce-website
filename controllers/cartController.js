@@ -5,6 +5,13 @@ const { User } = require("../models/userSchema");
 const { Address } = require("../models/addressSchema");
 const { userSessionCheck } = require("../middlewares/middleware");
 const Wallet = require("../models/walletSchema");
+
+// -------------------------------------------------------------
+// =========================== USER  SIDE======================>
+// -------------------------------------------------------------
+
+
+// -----------PRODUCT ADD TO CART ----------------->
 module.exports.productAddToCart = async (req, res) => {
   try {
     const prodId = req.params.id;
@@ -66,6 +73,9 @@ module.exports.productAddToCart = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+// -----------CART PAGE RENDERING ----------------->
 module.exports.cartPage = async (req, res) => {
   try {
     const userId = req.session.user._id;
@@ -83,6 +93,9 @@ module.exports.cartPage = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+
+// -----------DELETE CART ITEM ----------------->
 module.exports.removeCartItem = async (req, res) => {
   try {
     const id = req.params.id;
@@ -105,6 +118,9 @@ module.exports.removeCartItem = async (req, res) => {
     return res.status(500).send("Internal Server Error");
   }
 }
+
+
+// -----------CHECKOUT PAGE RENDERING ----------------->
 module.exports.checkout = async (req, res) => {
   try {
     const userId = req.session.user._id;
@@ -121,6 +137,9 @@ module.exports.checkout = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 }
+
+
+// -----------DASHBOARD PAGE RENDERING ----------------->
 module.exports.changeAddress = async (req, res) => {
   try {
       // Assuming you have a middleware to parse the request body, like body-parser or express.json
@@ -163,10 +182,16 @@ module.exports.changeAddress = async (req, res) => {
       res.status(500).send('Internal Server Error');
   }
 };
+
+
+// -----------ADDRESS CHANGE RENDERING ----------------->
 module.exports.addressChange = async (req, res) => {
   const category = await Category.find({ active: true });
   res.render('user/changeAddress',{category});
 }
+
+
+// -----------CHECKOUT ADDRESS CHANGE RENDERING ----------------->
 module.exports.updateAddressChange = async (req, res) => {
   try {
       const id = req.session.user._id;
@@ -195,6 +220,9 @@ module.exports.updateAddressChange = async (req, res) => {
       res.status(500).send("internal server error")
   }
 }
+
+
+// -----------QUANTITY UPDATE ----------------->
 module.exports.updateQuantity = async (req, res) => {
   try {
     const userId = req.session.user._id;

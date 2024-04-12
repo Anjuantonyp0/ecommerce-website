@@ -12,6 +12,9 @@ const getCategory = async function () {
       console.log(error.message);
     }
   };
+
+
+// -----------BANNER RENDERING ----------------->
 module.exports.addBannerPage = async(req,res)=>{
     try {
         const banner = await Banner.find();
@@ -19,26 +22,31 @@ module.exports.addBannerPage = async(req,res)=>{
         res.render('admin/add-banner', {banner: banner});
     } catch (error) {
         console.log(error.message);
-        console.log('Try catch error in addBannerPage 🤷‍♂️📀🤷‍♀️');
+        console.log('Try catch error in addBannerPage ');
     }
 }
+
+
+// -----------BANNER LIST RENDERING ----------------->
 module.exports.bannerList = async(req,res)=>{
     try {
         const banner = await Banner.find();
-        // const headCategory = await getCategory();
         res.render('admin/banner-manage',{banners: banner});
     } catch (error) {
         console.log(error.message);
-        console.log('Try catch error in bannerList 🤷‍♂️📀🤷‍♀️');
+        console.log('Try catch error in bannerList ');
     }
 }
+
+
+// -----------ADD BANNER ----------------->
 module.exports.addBanner = async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).send('Please upload an image');
                        }
         const { filename } = req.file; 
-        const banner = new Banner({ image: filename,description: req.body.description || '' }); // Add a default value if description is empty
+        const banner = new Banner({ image: filename,description: req.body.description || '' }); 
         const savedBanner = await banner.save();
         if (savedBanner) {
             return res.redirect('/admin/banner-mg');
@@ -51,6 +59,9 @@ module.exports.addBanner = async (req, res) => {
         console.log(error.message);
     }
 };
+
+
+// -----------DELETE BANNER ----------------->
 module.exports.deleteBanner = async(req,res)=>{
     try {
         const id = req.params.id;

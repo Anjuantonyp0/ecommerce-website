@@ -43,6 +43,8 @@ module.exports.blockChecker = async (req, res, next) => {
     } else {
       next();
     }
+
+    // res.json("hrtyyy")
   } catch (error) {
     console.log(error.message);
   }

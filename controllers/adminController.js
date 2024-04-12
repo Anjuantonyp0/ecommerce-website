@@ -81,7 +81,6 @@ module.exports.dashboard = async(req, res) => {
 
 
 // -----------DASHBOARD PAGE RENDERING ----------------->
-
 module.exports.deactivatedUser = async (req, res) => {
     const userId = req.params.id;
   try {
@@ -94,6 +93,8 @@ module.exports.deactivatedUser = async (req, res) => {
     }
 };
 
+
+// -----------USER MANAGEMENT RENDERING ----------------->
 module.exports.userManagment = async (req, res) => {
     try {
       const user = await User.find({});
@@ -104,6 +105,8 @@ module.exports.userManagment = async (req, res) => {
     }
 };
 
+
+// -----------USER BLOCK RENDERING ----------------->
 module.exports.userBlock = async (req, res) => {
     try {
       const id = req.params.id;
@@ -118,6 +121,8 @@ module.exports.userBlock = async (req, res) => {
     }
 };
 
+
+// -----------USER UNBLOCK RENDERING ----------------->
 module.exports.userUnBlock = async (req, res) => {
     try {
       const id = req.params.id;
@@ -131,6 +136,8 @@ module.exports.userUnBlock = async (req, res) => {
     }
 };
 
+
+// ----------- LOGOUT PAGE  RENDERING ----------------->
 module.exports.adminLogout = async (req, res) => {
     try {
       req.session.admin_id = null; 
@@ -140,6 +147,8 @@ module.exports.adminLogout = async (req, res) => {
     }
 };
 
+
+// -----------CHART DATA RENDERING ----------------->
 module.exports.chartData = async (req, res) => {
     try {
     const orderData = await Order.aggregate([

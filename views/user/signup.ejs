@@ -1,0 +1,346 @@
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: calc(100% - 20px);
+        padding: 12px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+    .error {
+        border-color: #ff0000;
+    }
+
+    .error-message {
+        color: #ff0000;
+        margin-top: 5px;
+        font-size: 12px;
+        text-align: left;
+    }
+
+
+    input:focus {
+        border-color: #4caf50;
+    }
+
+    button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    a {
+        color: #3409f5;
+        text-decoration: none;
+        display: block;
+        margin-top: 15px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+
+</head>
+
+
+<body>
+
+    <form  action="" method="post" id="registrationForm">
+        <h2>Create an Account</h2>
+        <input type="text" id="username" name="name" placeholder="username" required pattern="[a-zA-Z ]+[a-zA-Z]+$">
+        <label id="nameError" class="error-message"></label>
+        <input type="email" id="email" name="email" placeholder="Email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+        <label id="emailError" class="error-message"></label>
+        <input type="tel" id="phone" name="phone" placeholder="Phone" required pattern="[0-9]{10}">
+        <label id="phoneError" class="error-message"></label>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <label id="passwordError" class="error-message"></label>
+        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+        <label id="confirmPasswordError" class="error-message"></label>
+    
+        <button type="submit" id = "registerButton">Sign Up</button>
+        
+        <a href="/login">Already have an account?</a>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        const nameInput = document.getElementById('username');
+const emailInput = document.getElementById('email');
+const mobileInput = document.getElementById('phone');
+const passwordInput = document.getElementById('password');
+const repasswordInput = document.getElementById('confirm_password');
+const nameError = document.getElementById('nameError');
+const emailError = document.getElementById('emailError');
+const mobileError = document.getElementById('phoneError');
+const passwordError = document.getElementById('passwordError');
+const repasswordError = document.getElementById('confirmPasswordError');
+const registrationForm = document.getElementById('registrationForm');
+const errorMessage = document.getElementById('errorMessage');
+const emailFeedback = document.getElementById('email-feedback');
+const mobileFeedback = document.getElementById('mobile-feedback');
+let formHasErrors = false;
+
+
+
+nameInput.addEventListener('blur', () => {
+    const nameValue = nameInput.value.trim();
+    if (nameValue === '') {
+        nameError.textContent = "This field is required";
+        nameInput.classList.add('error-field');
+        formHasErrors = true;
+    }
+    else if (!isValidName(nameValue)) {
+        nameError.textContent = 'Please enter a valid name';
+        nameInput.classList.add('error-field');
+        formHasErrors = true;
+    } else {
+        nameError.textContent = '';
+        nameInput.classList.remove('error-field');
+        formHasErrors = false;
+    }
+});
+
+function isValidName(name) {
+    return /^[A-Za-z .]+$/.test(name);
+}
+
+emailInput.addEventListener('blur', () => {
+    const emailid = emailInput.value.trim();
+    if (emailid === '') {
+        emailError.textContent = "This field is required";
+        emailInput.classList.add('error-field');
+        formHasErrors = true;
+    } else if (!isValidEmail(emailid)) {
+        emailError.textContent = 'Please enter a valid email id';
+        emailInput.classList.add('error-field');
+        formHasErrors = true;
+    } else {
+        emailError.textContent = '';
+        emailInput.classList.remove('error-field');
+        formHasErrors = false;
+    }
+});
+
+function isValidEmail(email) {
+    return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
+}
+emailInput.addEventListener('input', async () => {
+    emailInput.value = emailInput.value.toLowerCase();
+});
+
+
+emailInput.addEventListener('input', async () => {
+    const email = emailInput.value.toLowerCase().trim();
+
+    if (email) {
+        const emailExists = await isEmailAlreadyRegistered(email);
+        
+    
+        if (emailExists) {
+            emailFeedback.textContent = 'Email id is already registered. Please login.';
+            emailFeedback.style.color = 'red';
+            emailInput.classList.add('error-field');
+            formHasErrors = true;
+        } else {
+            emailFeedback.textContent = '';
+            emailInput.classList.remove('error-field');
+            formHasErrors = false;
+        }
+    }
+});
+
+async function checkEmailExists(email) {
+    const response = await fetch('/check-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    return data.exists;
+}
+
+
+
+
+mobileInput.addEventListener('blur', async () => {
+    const mobileValue = mobileInput.value.trim();
+    if (mobileValue === '') {
+        mobileError.textContent = "This field is required";
+        mobileInput.classList.add('error-field');
+        formHasErrors = true;
+    } else if (!isValidMobile(mobileValue)) {
+        mobileError.textContent = 'Mobile number is invalid (must be 10 digits).';
+        mobileInput.classList.add('error-field');
+        formHasErrors = true;
+    } else {
+        mobileError.textContent = '';
+        mobileInput.classList.remove('error-field');
+        formHasErrors = false;
+    }
+});
+
+
+mobileInput.addEventListener('input', async () => {
+    const mobile2 = mobileInput.value.trim();
+
+    const mobileExists = await checkMobileExists(mobile2);
+
+    if (mobileExists) {
+        mobileFeedback.textContent = 'Mobile number is already registered. Please try another.';
+        mobileFeedback.style.color = 'red';
+        mobileInput.classList.add('error-field');
+        formHasErrors = true;
+    } else {
+        mobileFeedback.textContent = '';
+        mobileInput.classList.add('error-field');
+        formHasErrors = false;
+    }
+})
+
+
+function isValidMobile(mobile) {
+    return /^\d{10}$/.test(mobile);
+}
+
+async function checkMobileExists(mobile) {
+    const response = await fetch('/check-mobile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mobile }),
+    });
+    const data = await response.json();
+    return data.exists;
+}
+
+///////////
+passwordInput.addEventListener('blur', () => {
+    const passwordValue = passwordInput.value.trim();
+    if (passwordValue === '') {
+        passwordError.textContent = 'Password is required';
+        passwordInput.classList.add('error-field');
+        formHasErrors = true;
+    } else if (!isValidPassword(passwordValue)) {
+        passwordError.textContent = 'Password must have at least 8 characters and contain at least one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&).';
+        passwordInput.classList.add('error-field');
+        formHasErrors = true;
+    } else {
+        passwordError.textContent = '';
+        passwordInput.classList.remove('error-field');
+        formHasErrors = false;
+    }
+});
+
+function isValidPassword(password) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password);
+}
+
+
+repasswordInput.addEventListener('blur', () => {
+    const passwordValue2 = passwordInput.value.trim();
+    const repasswordValue = repasswordInput.value.trim();
+    if (passwordValue2 !== repasswordValue) {
+        repasswordError.textContent = 'Password do not match';
+        repasswordInput.classList.add('error-field');
+        formHasErrors = true;
+    } else {
+        repasswordError.textContent = '';
+        repasswordInput.classList.remove('error-field');
+        formHasErrors = false;
+    }
+});
+
+repasswordInput.addEventListener('input', () => {
+    const passwordValue3 = passwordInput.value.trim();
+    const repasswordValue2 = repasswordInput.value.trim();
+    if (passwordValue3 === repasswordValue2) {
+        repasswordError.textContent = '';
+        repasswordInput.classList.remove('error-field');
+        formHasErrors = false;
+    }
+});
+
+// imageInput.addEventListener('change', () => {
+//     const selectedFile = imageInput.files[0];
+//     if (selectedFile) {
+//         const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif'];
+//         const fileExtension = selectedFile.name.toLowerCase().substring(selectedFile.name.lastIndexOf('.'));
+
+//         if (allowedExtensions.includes(fileExtension)) {
+//             imageError.textContent = '';
+//             imageInput.disabled = false;
+//         } else {
+//             imageError.textContent = 'Please select a valid image file (JPG, JPEG, PNG, GIF).';
+//             imageInput.value = '';
+//             imageInput.disabled = false;
+//         }
+//     }
+// });
+
+function togglePasswordVisibility() {
+    const passwordToggle = document.querySelector('.password-toggle');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.classList.remove('fa-eye');
+        passwordToggle.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        passwordToggle.classList.remove('fa-eye-slash');
+        passwordToggle.classList.add('fa-eye');
+    }
+}
+
+
+
+
+document.getElementById('registerButton').addEventListener('click', function (event) {
+    if (formHasErrors) {
+        event.preventDefault();
+    }
+});
+    </script>
+    </body>
+    

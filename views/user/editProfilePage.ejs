@@ -1,0 +1,171 @@
+<%- include('../partials/user/userHeader.ejs') %>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Profile</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        } */
+
+        
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        .container h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-group button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+
+        }
+
+        .message-box {
+            position: fixed;
+            top: 18%;
+            left: 36%;
+            width: 30%;
+            background-color: rgba(97, 97, 97, 0.753);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+            z-index: 9999;
+            /* Set z-index to position the message box above other elements */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border: 0.5px solid rgba(92, 92, 92, 0.74);
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../partials/user/userHeader.ejs') %>
+
+    <div class="container col-sm-4">
+        <h2>Edit Profile</h2>
+        <form action="/update-profile/<%= user._id %>" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="name" value="<%= user.name %>" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" value="<%= user.phone %>" required>
+            </div>
+            <div class="form-group">
+                <label for="img">Image:</label>
+                <!-- Input field for image upload can be added here -->
+            </div>
+            <div class="form-group">
+                <button type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            if (fullname === "" || email === "" || phone === "") {
+                alert("All fields are required");
+                return false;
+            }
+
+            const phonePattern = /^\d{10}$/; // Assumes a 10-digit format
+            if (!phone.match(phonePattern)) {
+                alert("Please enter a valid 10-digit phone number.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/mixitup.min.js"></script>
+        <script src="js/jquery.countdown.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/jquery.nicescroll.min.js"></script>
+        <script src="js/main.js"></script>
+</body>
+
+</html>

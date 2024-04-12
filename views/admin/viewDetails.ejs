@@ -1,0 +1,241 @@
+<%- include('../partials/admin/adminHeader') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Order Details</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add your stylesheet link here -->
+    <style>
+        /* Your CSS styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            background-color: green;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .order-details {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-details p {
+            margin: 10px 0;
+        }
+
+        .order-details h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .order-details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .order-details th, .order-details td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .order-details th {
+            background-color: green;
+        }
+
+        .order-status-btn {
+            background-color: green;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .order-status-btn:hover {
+            background-color: green;
+        }
+
+        .order-status-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .order-status-dropdown-content button {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .order-status-dropdown-content button:hover {
+            background-color: #f9f9f9;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin - Order Details</h1>
+    <div class="order-details">
+        <h2>Order Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Id</th>
+                    <th>Order ID</th>
+                     <th>Order Status</th>
+                    <th>Order Date</th>
+                    <th>Address</th>
+                    <th>Payment Method</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%= order.userId %></td>
+                    <td><%= order._id %></td>
+                    <% if(order.canceled){%>
+                        <td>canceled</td>
+
+                  <%  }else{ %>
+                    <td><%= order.status %></td>
+
+                    <% } %>
+                    <td><%= order.createdAt.toDateString() %></td>
+                    <td><%= order.address.houseName %> <br> <%= order.address.postOffice %> <br><%= order.address.district %> <br><%= order.address.pin %></td>
+                    <td><%= order.payment %></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Ordered Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Product Image</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <% order.items.forEach(item => { %>
+                    <tr>
+                        <td><%= item.product.name %></td>
+                        <td><%= item.quantity %></td>
+                        <td>₹<%= item.product.price %></td>
+                        <td>
+                            <!-- Display Product Image -->
+
+                            <img src="/uploads/<%= item.product.image[0].url %>" alt="<%= item.product.name %> Image" style="max-width: 100px; max-height: 100px;">
+                          </td>
+                        
+                    </tr>
+                <% }); %>
+                <div>
+                    <% if (order.returnRequest === true && order.returnApprovel === false) { %><br>
+                        <% console.log('Return Request:', order.returnRequest); %>
+                        <p style="color: red; font-size: 20px;"> User Requested for Return </p>
+                        <a href="/admin/return-approvel/<%= order._id %>"><button class="btn btn-success">Approve</button></a>
+                        <a href="/admin/decline-return/<%= order._id %>"><button class="btn btn-danger">Decline</button></a>
+                    <% }else if( order.returnRequest === true && order.returnApprovel === true){ %>
+                        <h1 style="color: red;">Product has succesfully returned</h1>
+                        <% } %>
+
+                </div>
+            </tbody>
+            
+
+        </table>
+
+        <div class="dropdown">
+            <button class="order-status-btn">Change Status</button>
+            <div class="order-status-dropdown-content">
+                <button>Placed</button>
+                <button>Packed</button>
+                <button>Shipping</button>
+                <button>Out for Delivery</button>
+                <button>Delivered</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownContent = document.querySelector('.order-status-dropdown-content');
+
+            document.querySelector('.order-status-btn').addEventListener('click', function () {
+                dropdownContent.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!event.target.matches('.order-status-btn')) {
+                    if (dropdownContent.classList.contains('show')) {
+                        dropdownContent.classList.remove('show');
+                    }
+                }
+            });
+
+            document.querySelectorAll('.order-status-dropdown-content button').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const orderId = '<%= order._id %>';
+                    const orderStatus = btn.textContent.trim();
+                    console.log(orderId, orderStatus);
+
+                    fetch('/admin/updateOrderStatus', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ orderId, orderStatus }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Order status updated successfully:', data);
+                        // You can update the UI or perform additional actions here
+
+                    })
+                    .catch(error => console.error('Error updating order status:', error));
+                    location.reload();
+
+                });
+            });
+        });
+    </script>
+</body>
+</html>

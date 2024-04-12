@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom CSS */
+    .navbar {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 1000; /* Ensure it's above other content */
+    }
+    .breadcrumb {
+      margin-bottom: 0; /* Remove default bottom margin */
+      background-color: #f8f9fa; /* Light background color */
+      padding: 10px 15px; /* Add some padding */
+      border-radius: 0; /* Remove border-radius */
+    }
+    .breadcrumb-item {
+      display: inline-block; /* Display items inline */
+      margin-right: 5px; /* Add some space between items */
+    }
+    .breadcrumb-item:last-child {
+      font-weight: bold; /* Make the last item bold */
+    }
+    .breadcrumb-item::before {
+      content: "/"; /* Add a separator between items */
+      margin-right: 5px; /* Add space between separator and item */
+    }
+    .breadcrumb-item a {
+      color: #6c757d; /* Set link color */
+      text-decoration: none; /* Remove default underline */
+    }
+    .breadcrumb-item a:hover {
+      text-decoration: underline; /* Underline on hover */
+    }
+    .navbar-brand img {
+      max-height: 50px; /* Set max-height for the logo */
+    }
+  </style>
+</head>
+<body >
+
+
+  <nav aria-label="breadcrumb" class="breadcrumb" style="position: fixed; width: 100%; margin-bottom: 40px; top: 0; height: 120px ;">
+    <a class="navbar-brand" href="./index.html">
+      <img src="/img/logo.png" alt="Logo">
+    </a>
+    <ol class="breadcrumb"> 
+      <li class="breadcrumb-item">
+        <a href="/admin/dashboard">HOME</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/user-mg">USERS</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/category-mg">CATEGORY</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/product-mg">PRODUCTS</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/orderManagement">ORDER</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/coupon-mg">COUPONS</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/banner-mg">BANNER</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="/admin/sales-report">SALES REPORT</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+       <a href="/admin/logout">
+        Logout
+       </a>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- Your main content goes here -->
+
+  <!-- Bootstrap JS bundle with Popper -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

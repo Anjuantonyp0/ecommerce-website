@@ -1,0 +1,170 @@
+<%- include('../partials/user/userHeader.ejs') %>
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion</title>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+   
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <style>
+      .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .pagination-button {
+        padding: 10px;
+      }
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #fff;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: 30px auto 0; 
+        
+      }
+      .search {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .search-form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 800px; /* Adjust the width as needed */
+        margin: 0 auto;
+      }
+      input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+        font-size: 16px;
+      }
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .options {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .sort-options, .search-options, .filter-options {
+        display: flex;
+        align-items: center;
+      }
+      label {
+        margin-right: 10px;
+        font-size: 16px;
+      }
+  
+      select {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        outline: none;
+      }
+    </style>
+</head>
+<body class="mt-5 pt-3">
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+ 
+    <!-- Shop Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="row">
+                        <% product.forEach(item => { %>
+                        <a href="/product-detail?id=<%= item._id %>">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="uploads/<%= item.image[0].url %>">
+                                        <% if(item.stock > 0) { %>
+                                            <div class="label new">In stock</div>
+                                        <% } else { %>
+                                            <div class="label bg-danger">Out of stock</div>
+                                        <% } %>
+                                        <ul class="product__hover">
+                                            <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                            <li><a href="/add-wishlist/<%= item._id %>" id="addToWhishlist"><i class="fa-solid fa-heart"></i></a></li>
+                                            <% if(item.stock > 0) { %>
+                                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                            <% } %>
+                                        </ul>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <h6><a href="#"><%= item.name %></a></h6>
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product__price">₹ <%= item.price %></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="footer__copyright__text"></div>
+</body>
+
+                
+ <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

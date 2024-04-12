@@ -1,0 +1,114 @@
+<%- include('../partials/user/userHeader') %><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS Styles -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <style>
+        body {
+            padding: 5px;
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+        }
+
+        h1 {
+            color: #88c2ff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body class="pt-5 mt-5">
+    <div class="container">
+        <h1>Order Details</h1>
+
+        <% if (order) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% order.forEach(odr => { %>
+                        <tr>
+                            <td>#<%= odr._id %></td>
+                            <td>
+                                <% odr.items.forEach(items => { %>
+                                    <%= items.product.name %><br>
+                                <% }) %>
+                            </td>
+                            <td>
+                                <% odr.items.forEach(items => { %>
+                                    <%= items.quantity %><br>
+                                <% }) %>
+                            </td>
+                            <td>$<%= odr.totalAmount %></td>
+                            <td>
+                                <% if (odr.canceled !== true || odr.returned !== true ) { %>
+                                    <%= odr.status %>
+                                <% } else { %>
+                                    Canceled
+                                <% } %>
+                                <% if (odr.returned === true) { %>
+                                    <br>Return Initiated
+                                <% } %>
+                            </td>
+                            <td>
+                                <a href="/view-order-details/<%= odr._id %>" class="btn btn-primary">View Details</a>
+                                <a href="/place-order/<%= odr._id %>" class="btn btn-primary">Pay Now</a>
+
+
+                                <!-- Include buttons for cancel and return actions if needed -->
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div class="alert alert-danger" role="alert">
+                Order not found
+            </div>
+        <% } %>
+    </div>
+    <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+        <!-- Modal content for returning product -->
+    </div>
+    <!-- Include Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

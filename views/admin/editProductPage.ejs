@@ -1,0 +1,235 @@
+<%- include('../partials/admin/adminHeader.ejs') %>
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-updateProduct {
+    text-align: center;
+    
+  }
+
+  .form-updateProduct h1 {
+    color: #007BFF;
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 8px;
+    box-sizing: border-box;
+  }
+
+  .error {
+    color: #dc3545;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  .success {
+    color: #28a745;
+  }
+
+  .btn-primary {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  .btn-primary:hover {
+    background: #0056b3;
+    color: #0056b3;
+  }
+  .custom-select option:checked {
+    background: transparent;
+  }
+
+  /* Override the background color for the entire dropdown */
+  .custom-select:hover {
+    background: transparent; /* or specify any color you prefer */
+  }
+</style>
+
+<div class="container">
+  <form class="form-updateProduct" action="/admin/update-product/<%= product._id %>" method="post" enctype="multipart/form-data" id="productForm">
+    <h1>Edit Product</h1>
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" name="name" required id="name" placeholder="Name" value="<%= product.name %>">
+      <span class="name error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Choose the category:</label>
+      
+      <select class="form-control custom-select" name="category" id="category" >
+        <% const exCat=product.category.categoryName %>
+        <option value="<%= product.category._id %>"><%=product.category.categoryName %></option>
+        
+        <% category.forEach((cat, index) => { %>
+        
+          <% if(cat.categoryName!== exCat){ %>
+            <option value="<%= cat._id %>"><%= cat.categoryName %> </option>
+          <% } %>
+        <% }) %>
+      </select>
+      <span class="category error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input type="number" name="price" required id="price" placeholder="Price" value="<%= product.price %>">
+      <span class="price error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input type="text" name="description" required id="description" placeholder="Description" value="<%= product.description %>">
+      <span class="description error"></span>
+    </div>
+
+    <div class="form-group">
+      <label for="image1">Image1:</label>
+      <% for(let j=0;j<product.image.length;j++){ %>
+      <img src="/uploads/<%= product.image[j].url %>" alt="image-1" style="width: 100px; height: auto; margin: 10px 0;">
+
+      <input type="file" name="image1">
+      <input type="hidden" name="old_image1" value="<%= product.image[j].url%>">
+      <span class="file1 error"></span>
+      <br>
+      <% } %>
+    </div>
+
+   
+
+    <div class="form-group">
+      <label for="stock">Stock:</label>
+      <input type="number" name="stock" required id="stock" placeholder="Stock" value="<%= product.stock %>">
+      <span class="stock error"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('productForm');
+
+  form.addEventListener('change', function (event) {
+    let valid = true;
+
+    // Validation for the name field
+    const nameField = document.getElementById('name');
+    const nameError = document.querySelector('.name');
+    if (nameField.value.trim() === '') {
+      nameError.textContent = 'Name is required';
+      valid = false;
+    } else {
+      nameError.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    // Validation for the category field
+    const categoryField = document.getElementById('category');
+    const categoryError = document.querySelector('.category');
+    if (categoryField.value === '') {
+      categoryError.textContent = 'Category is required';
+      valid = false;
+    } else {
+      categoryError.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    // Validation for the price field
+    const priceField = document.getElementById('price');
+    const priceError = document.querySelector('.price');
+    if (isNaN(priceField.value) || priceField.value <= 0) {
+      priceError.textContent = 'Price must be a positive number';
+      valid = false;
+    } else {
+      priceError.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    // Validation for the description field
+    const descriptionField = document.getElementById('description');
+    const descriptionError = document.querySelector('.description');
+    if (descriptionField.value.trim() === '') {
+      descriptionError.textContent = 'Description is required';
+      valid = false;
+    } else {
+      descriptionError.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    // Validation for the image1 field
+    const file1 = document.querySelector('input[name="image1"]');
+    const file1Error = document.querySelector('.file1');
+    if (!file1.files[0]) {
+      file1Error.textContent = 'Image1 is required';
+      valid = false;
+    } else {
+      file1Error.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    // Validation for the image2 field
+    const file2 = document.querySelector('input[name="image2"]');
+    const file2Error = document.querySelector('.file2');
+    if (!file2.files[0]) {
+      file2Error.textContent = 'Image2 is required';
+      valid = false;
+    } else {
+      file2Error.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    // Validation for the stock field
+    const stockField = document.getElementById('stock');
+    const stockError = document.querySelector('.stock');
+    if (isNaN(stockField.value) || stockField.value < 1) {
+      stockError.textContent = 'Stock must be a non-negative number';
+      valid = false;
+    } else {
+      stockError.innerHTML = '<i style="color: green;" class="fa-solid fa-circle-check"></i>';
+    }
+
+    if (!valid) {
+      event.preventDefault(); // Prevent form submission if there are validation errors.
+    }
+  });
+</script>

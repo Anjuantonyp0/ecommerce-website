@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Address</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .address-form {
+            background-color: #fff;
+            padding: 20px; /* Adjusted padding */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 500px; /* Increased width */
+            margin-top: 70px;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .address-form h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .checkout__input {
+            margin-bottom: 15px;
+        }
+
+        .checkout__input p {
+            margin: 0;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .checkout__input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="address-form">
+        <form action="/update-address/<%= address._id %>" method="post">
+            <h1>Update Address</h1>
+            <div class="checkout__input">
+                <p>name<span>*</span></p>
+                <input type="text" name="name" value="<%= address.name %>" class="form-control">
+            </div>       
+            <div class="checkout__input">
+                <p>houseName<span>*</span></p>
+                <input type="text" name="houseName" value="<%= address.houseName %>" class="form-control">
+            </div>
+            <div class="checkout__input">
+                <p>postOffice<span>*</span></p>
+                <input type="text" name="postOffice" value="<%= address.postOffice %>" class="form-control">
+            </div>
+            <div class="checkout__input">
+                <p>district<span>*</span></p>
+                <input type="text" name="district" value="<%= address.district %>" class="form-control">
+            </div>            
+            <div class="checkout__input">
+                <p>Pin<span>*</span></p>
+                <input type="text" name="pin" value="<%= address.pin %>" class="form-control">
+            </div>
+            
+            <button type="submit">Update</button>
+            <input id="user_id" type="hidden" value="<%= address._id %>" class="form-control">
+        </form>
+    </div>
+</body>
+</html>

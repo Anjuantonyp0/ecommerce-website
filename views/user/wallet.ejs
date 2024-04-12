@@ -1,0 +1,146 @@
+<%- include("../partials/user/userHeader") %>
+<br><br><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashion</title>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fff;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
+        }
+
+        #wallet-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        #balance {
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #007bff;
+        }
+
+        #transaction-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .transaction {
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .credit {
+            color: #28a745;
+        }
+
+        .debit {
+            color: #dc3545;
+        }
+
+        #add-funds, #withdraw-funds {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            width: 200px;
+            text-align: center;
+        }
+
+        #add-funds {
+            background-color: #28a745;
+        }
+
+        #withdraw-funds {
+            background-color: #dc3545;
+        }
+
+        #add-funds:hover, #withdraw-funds:hover {
+            filter: brightness(85%);
+        }
+
+        .transaction-time {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        h2, h3, h4 {
+            color: #007bff;
+            text-align: center;
+        }
+
+        span {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+<br>
+    <div id="wallet-container" class="container">
+        <% if (wallet) { %>
+
+            <h2>Your Wallet</h2>
+            <% let roundedBalance = Math.round(wallet.balance) %>
+            
+            
+            
+            <div id="balance">Balance: ₹ <%= roundedBalance %>.00</div>
+        <% } else { %>
+            <h2>Your Wallet is Empty</h2>
+        <% } %>
+
+        <ul id="transaction-list">
+            <% transaction.transaction.forEach(trans => { %>
+                <li class="transaction">
+                    <span><%= trans.mode %></span>
+
+                    <span><%= trans.amount %></span>
+                    <span class="transaction-time"><%= trans.time.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }) %></span>
+
+                </li>
+            <% }) %>
+        </ul>
+
+    </div>
+
+</body>
+</html>

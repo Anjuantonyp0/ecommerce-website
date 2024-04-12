@@ -1,0 +1,50 @@
+<div class="body" style="background-color: #f7f7f7; padding: 20px; text-align: center;">
+    <div class="signup-container" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: 400px; margin: 0 auto;">
+        <h1 style="font-size: 24px; color: #333; margin-bottom: 20px;">Sign Up</h1>
+        
+        <form action="/verify/<%= _id %>" method="POST">
+          <label><%= _id %>abcd</label>
+           
+            <div class="input-container" style="margin-bottom: 20px;">
+                <label for="otp" style="display: block; font-size: 14px; color: #555; margin-bottom: 5px;">OTP</label>
+                <input type="text" id="otp" placeholder="Enter OTP" name="otp" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
+            </div>
+            <button type="submit" style="background-color: #007bff; color: #fff; padding: 12px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">Sign Up</button>
+        
+          </form>
+          <div class="text-center mt-4">
+            <span id="verifiBtn">
+              <button disabled="true" class="btn btn-danger border-dark curved" style="width: 40%;">
+                Resend OTP in <span class="timer"></span><span id="counter"></span>
+              </button>
+            </span>
+          </div>
+
+<script>
+    function countdown() {
+      let seconds = 30;
+      function tick() {
+        let counter = document.getElementById("counter");
+        seconds--;
+        counter.innerHTML =
+          "0:" + (seconds < 10 ? "0" : "") + String(seconds);
+        if (seconds > 0) {
+          setTimeout(tick, 1000);
+        } else {
+          // Change the button style here
+          console.log("hello");
+          const resendBtn = document.getElementById("verifiBtn");
+          resendBtn.innerHTML = `
+          <button type="submit" class="btn btn-primary btn-block border-dark curved" onclick="window.location.href='/resendOtp?email=<%= resend%>&name=<%= name %>'"  style="width: 40%;">Resend OTP</button>
+
+ `;
+          document.getElementById("counter").innerHTML = "";
+        }
+      }
+      tick();
+    }
+    countdown();
+  </script>
+          
+        </div>
+    </div>

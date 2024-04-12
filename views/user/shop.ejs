@@ -1,0 +1,622 @@
+<%- include('../partials/user/userHeader.ejs') %>
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ashion</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+      /* Custom Styles */
+      .pagination-container {
+          display: flex;
+          justify-content: space-between;
+           align-items: center;
+           padding-left: 100px;
+          padding-right: 100px; /* Optional: Add padding for spacing */
+          margin-top: 20px;
+        }
+
+        .pagination-number,
+        .pagination-button{
+          font-size: 1.2rem;
+          background-color: #007bff;
+          color: black;
+          border: none;
+          margin: 0.25rem;
+          cursor: pointer;
+          height: 2.5rem;
+          width: 2.5rem;
+          border-radius: .2rem;
+          padding: 5px 10px;
+
+        }
+
+          .pagination-number:hover,
+          .pagination-button:not(.disabled):hover {
+          background: #e21515;
+        }
+      .search-options {
+          display: flex;
+          align-items: center;
+      }
+
+      .search-form {
+          display: flex;
+          flex-grow: 1;
+          margin-right: 20px;
+      }
+
+      .search-form input[type="text"] {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+      }
+
+      .search-form button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      .search-form button:hover {
+          background-color: #0056b3;
+      }
+
+      .filter h2 {
+          margin-bottom: 10px;
+          font-size: 20px;
+          color: #333;
+      }
+
+      .categories h3 {
+          margin-bottom: 10px;
+          font-size: 16px;
+          color: #333;
+      }
+
+      .categories .form-check {
+          margin-bottom: 5px;
+      }
+
+      .check h3 {
+          margin-bottom: 10px;
+          font-size: 16px;
+          color: #333;
+      }
+
+      .check .form-check {
+          margin-bottom: 5px;
+      }
+
+      #filter-button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+
+      #filter-button:hover {
+          background-color: #0056b3;
+      }
+  </style>
+</head>
+
+<body class="pt-5 mt-5">
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+<section class="search spad">
+  <div class="container">
+    <div class="options">
+      <div class="sort-options">
+        <div class="search-options">
+        
+            <input type="text" id="searchInput"placeholder="Search products..." onkeyup="sendData(this)" />
+            <button class="btn-success" style="padding: 10px 15px; background-color: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Search</button>
+        </div>
+        <br>
+      
+      </div>
+      
+    <!-- Shop Section Begin -->
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                  
+                    <!-- Filter Section -->
+                <div class="filter" style="width: 100%;">
+                    <h2>Filters</h2>
+
+                    <div class="categories" style="margin-bottom: 20px; margin-top: 20px;">
+
+                        <h3>Categories</h3>
+                      <% category.forEach(cat => { %><br>
+                        <div class="form-check">
+                            <input class="form-check-input" name="cat-check" type="radio" value="<%= cat._id %>" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                            <%= cat.categoryName %>
+                            </label>
+                          </div> 
+                      <% }) %>
+
+                    </div>
+                    <div class="check">
+                        <h3>Price</h3><br>
+                        
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="100" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              100 - 200
+                            </label>
+                          </div> 
+<br>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="200" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              200 - 300
+                            </label>
+                          </div> 
+                          <br>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="300" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              300 - 400
+                            </label>
+                          </div> 
+                          <br>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="400" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              400 - 500
+                            </label>
+                          </div> 
+                          <br>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="500" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              500 - 600
+                            </label>
+                          </div> 
+                          <br>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="600" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              600 - 700
+                            </label>
+                          </div> 
+                          <br>
+
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="700" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                             700 - 800
+                            </label>
+                          </div> 
+                          <br>
+                          
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" value="800" name="price-range" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              800 - 900
+                            </label>
+                          </div> 
+                         
+                          <br>
+                          <button id="filter-button" type="button" class="btn btn-primary" >Filter</button>
+                                                                                                                    
+                    </div>
+                </div>
+                
+              
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    <div class="row" id="productList">
+                        
+
+
+                      <% product.forEach(item => { %>
+                        <a href="/product-detail?id=<%= item._id %>">
+                          <div class="col-lg-4 col-md-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="uploads/<%= item.image[0].url %>">
+                                    <div class="label new">New</div>
+                                    <ul class="product__hover">
+                                        <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="#"><%= item.name %></a></h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price">₹ <%= item.price %></div>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                     
+                      <% }) %>
+                       
+                       
+                    </div>
+                      <div > 
+                        <div class="container-flex d-flex" id="">
+
+                        </div>
+                    <nav class="pagination-container">
+                        <button class="pagination-button" id="prev-button" title="Previous page" aria-label="Previous page">
+                          &lt;
+                        </button>
+                        
+                        <div id="pagination-numbers">
+                            <%  for (let index = 1; index <= Math.floor(product.length/5); index++) {%>
+                                <button class="btn" data-index=<%= index %> onclick="fetchProducts(<%= index %>)"><%= index %></button>
+                                
+                                <% }  %>
+                        </div>
+                        
+                        <button class="pagination-button" id="next-button" title="Next page" aria-label="Next page">
+                          &gt;
+                        </button>
+                      </nav>
+                    <!-- Add pagination links below the product grid -->
+                </div> 
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Section End -->
+<div class="footer__copyright__text"></div>
+
+   
+
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/jquery.countdown.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/main.js"></script>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    <!-- Start Column 2 -->
+    
+    
+
+
+
+      function sendData(e) {
+    const searching = document.getElementById('productList');
+
+    let match = e.value.match(/^[a-zA-Z]*/);
+    let match2 = e.value.match(/\s*/);
+    if(match2[0] === e.value){
+        
+    }
+
+    fetch('/product-search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ payload: e.value })
+    })
+    .then(res => res.json())
+    .then(data => {
+      let payload = data.payload;
+      console.log(payload);
+      searching.innerHTML = '<hr>';
+
+      payload.forEach((item, index) => {
+        if (index > 0) searching.innerHTML += '<hr>';
+        searching.innerHTML += `
+        <a href="/product-detail?id=${item._id}">
+                          <div class="col-lg-4 col-md-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg= "/uploads/${item.image[0].url}">
+                                    <img class="product__item__pic set-bg" data-setbg="" src="uploads/${item.image[0].url}" />
+                                    <div class="label new">New</div>
+                                    <ul class="product__hover">
+                                        <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="#">${item.name}</a></h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price">₹ ${item.price}</div>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                            </div> `;
+      });
+    })
+    .catch(error => console.error('Error:', error));
+
+    console.log("👋👋👋👋 I am searching in all products");
+  }
+
+    
+    </script>
+   <script>
+    const pageSize = 5;
+    function fetchProducts(page) {
+         this.currentPage = page
+             fetch('/pagination', {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type': 'application/json'
+                 },
+                 body: JSON.stringify({
+                     page: page,
+                     pageSize: pageSize
+                 })
+             })
+             .then(response => response.json())
+             .then(data => {
+                 const productList = document.getElementById('productList');
+                 currentPage = data.page
+                 if (data && data.products.length > 0) {
+                     let productHTML = '';
+                     data.products.forEach(item => {
+                         console.log(`uploads/${item.image[0].url}`)
+                         productHTML += `
+                             <a href="/product-detail?id=${item._id}">
+                           <div class="col-lg-4 col-md-6">
+                             <div class="product__item">
+                                 <div class="product__item__pic set-bg" data-setbg= "/uploads/${item.image[0].url}">
+                                     <img class="product__item__pic set-bg" data-setbg="" src="uploads/${item.image[0].url}" />
+                                     <div class="label new">New</div>
+                                     <ul class="product__hover">
+                                         <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                         <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                         <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                     </ul>
+                                 </div>
+                                 <div class="product__item__text">
+                                     <h6><a href="#">${item.name}</a></h6>
+                                     <div class="rating">
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                         <i class="fa fa-star"></i>
+                                     </div>
+                                     <div class="product__price">₹ ${item.price}</div>
+                                 </div>
+                             </div>
+                         </div>
+                         </a>
+                             </div>
+                         `;
+                     });
+ 
+                     productList.innerHTML = productHTML;
+                 }
+             })
+             .catch(error => console.log(error));
+         }
+ 
+         
+    document.addEventListener("DOMContentLoaded", () => {
+        let currentPage = 1;
+        const pageSize = 5;
+
+        function fetchProducts(page) {
+             
+            fetch('/pagination', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    page: page,
+                    pageSize: pageSize
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const productList = document.getElementById('productList');
+                currentPage = data.page
+                if (data && data.products.length > 0) {
+                    let productHTML = '';
+                    data.products.forEach(item => {
+                        console.log(`uploads/${item.image[0].url}`)
+                        productHTML += `
+                            <a href="/product-detail?id=${item._id}">
+                          <div class="col-lg-4 col-md-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg= "/uploads/${item.image[0].url}">
+                                    <img class="product__item__pic set-bg" data-setbg="" src="uploads/${item.image[0].url}" />
+                                    <div class="label new">New</div>
+                                    <ul class="product__hover">
+                                        <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                        <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                                        <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="#">${item.name}</a></h6>
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product__price">₹ ${item.price}</div>
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                            </div>
+                        `;
+                    });
+
+                    productList.innerHTML = productHTML;
+                }
+            })
+            .catch(error => console.log(error));
+        }
+
+        fetchProducts(currentPage);
+
+        document.getElementById('prev-button').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                fetchProducts(currentPage);
+            }
+        });
+
+        document.getElementById('next-button').addEventListener('click', () => {
+            
+            fetchProducts(currentPage);
+            
+        });
+    });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('filter-button').addEventListener('click', function() {
+      const searching = document.getElementById('productList');
+      var catCheck = $('input[type=radio][name="cat-check"]:checked').val();
+      var price = $('input[type=radio][name="price-range"]:checked').val();
+
+      if (catCheck !== undefined || price !== undefined) {
+        fetch('/filter-products', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            categoryId: catCheck,
+            price: price
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if (data) {
+            searching.innerHTML = '<hr>';
+            data.products.forEach(item => {
+              searching.innerHTML += `
+              <a href="/product-detail?id=${item._id}">
+    <div class="col-lg-4 col-md-6">
+        <div class="product__item">
+            <img class="product__item__pic set-bg" data-setbg="" src="uploads/${item.image[0].url}"/>
+                <div class="label new">New</div>
+                <ul class="product__hover">
+                    <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                    <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                    <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                </ul>
+            </img>
+            <div class="product__item__text">
+                <h6><a href="#">${item.name}</a></h6>
+                <div class="rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+                <div class="product__price">₹ ${item.price}</div>
+            </div>
+        </div>
+    </div>
+</a>  
+              `;
+            });
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      } else if (catCheck === undefined || price === undefined) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Please select the category or price to filter the products',
+          icon: 'error',
+          confirmButtonText: 'ok'
+        });
+      }
+    });
+  });
+</script>
+
+    
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+<%- include('../partials/admin/adminHeader') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add your stylesheet link here -->
+    <style>
+        /* styles.css */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(224, 221, 221, 0.2);
+        }
+
+        form {
+            display: grid;
+            grid-gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .title {
+          text-align: center;
+          color: #333;
+        }
+
+    </style>
+</head>
+<body>
+    <br>    <section style="background-color: #fff;">
+
+    <br>
+    <br><h1 class="title">Add Product </h1>
+
+
+    <main>
+        <form action="/admin/add-product" enctype="multipart/form-data" method="post">
+            <label for="productName">Product Name:</label>
+            <input type="text" id="productName" name="name" required />
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" min="0.01" step="0.01" required />
+
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" min="1" required />
+
+            <label for="category">Category:</label>
+            <select name="category" id="category" required>
+                <% category.forEach(cat => { %>
+                <option value="<%= cat._id %>"><%= cat.categoryName %></option>
+                <% }) %>
+            </select>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" multiple />
+
+            <button type="submit" id="updateProductButton">Add Product</button>
+        </form>
+    </main>
+
+    <!-- Bootstrap JS (Optional - If needed) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Toastr and SweetAlert scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const updateProductButton = document.getElementById('updateProductButton')
+            updateProductButton.addEventListener('click', function(event){
+                event.preventDefault();
+            
+                // Collect form data
+                const formData = new FormData(document.querySelector('form'));
+            
+                // Make an AJAX request to save the product
+                fetch('/admin/add-product', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(data => {
+                    // Display success message with SweetAlert
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Product added',
+                        text: 'The product has been successfully added',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/admin/product-mg';
+                        }
+                    });
+                })
+                .catch(error => {
+                    // Display error message with SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to add the product. Please try again.',
+                        confirmButtonText: 'OK'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

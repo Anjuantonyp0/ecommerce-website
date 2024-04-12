@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <!-- Bootstrap CSS Link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        .order-summary {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            margin-top: 30px;
+        }
+
+        .order-details h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .btn-back {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="order-summary">
+            <div class="order-number">
+                Order Successful! Your Order Number: <%= order._id %>
+            </div>
+            <div class="order-details">
+                <h4>Order Details:</h4>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
+                <p>Total Amount: $<%= order.totalAmount %></p>
+                <p>Delivery Address: <%= order.address.name %>, <%= order.address.houseName %>, <%= order.address.district %>, <%= order.address.postOffice %>, <%= order.address.pin %></p>
+                <!-- Add more order details as needed -->
+            </div>
+            <a href="/" class="btn btn-primary btn-back">Back to Home</a>
+            <a href="/vieworderdetails" class="btn btn-primary btn-back">view deatails</a>
+
+            
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

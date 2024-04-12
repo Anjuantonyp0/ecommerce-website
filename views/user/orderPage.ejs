@@ -1,0 +1,80 @@
+<%- include('../partials/user/userHeader.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <link rel="stylesheet" href="path/to/your/css/styles.css">
+    <!-- styles.css -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .order-management-container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .order-card {
+            display: flex;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .order-details {
+            padding: 20px;
+        }
+
+        .order-details h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .order-details p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body pt-5 mt-5>
+
+<div class="order-management-container">
+    <h1>Your Orders</h1>
+    
+    <% orderDb.forEach(order => { %>
+        <div class="order-card">
+            <img src="<%= order.image[0].url %>" alt="<%= order.productName %>">
+            <div class="order-details">
+                <h2><%= order.productName %></h2>
+                <p>Price: $<%= order.price.toFixed(2) %></p>
+                <p>Quantity: <%= order.quantity %></p>
+                <p>Size: <%= order.size %></p>
+                <p>Color: <%= order.color %></p>
+                <p>Status: <%= order.status %></p>
+            </div>
+        </div>
+    <% }); %>
+
+</div>
+
+</body>
+</html>

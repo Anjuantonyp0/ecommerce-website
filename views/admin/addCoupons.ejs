@@ -1,0 +1,127 @@
+<%- include('../partials/admin/adminHeader.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Add Coupon</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Your CSS styles */
+    body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+    .coupon-form {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #ccc;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="date"], input[type="number"] {
+      width: 95%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body mt-5 pt-4>
+  
+  <h1>Add Coupon</h1><br>
+  <div class="coupon-form">
+    <form action="/admin/add-coupon" method="post">
+      <label for="couponcode">Coupon Code:</label>
+      <input type="text" id="code" name="code">
+      <button id="coupon-generate" class="btn-success">Generate Coupon</button>
+
+      <label for="expiryDate">Expiry Date:</label>
+      <input type="date" id="expiryDate" name="expiryDate">
+
+      <label for="maxDiscount">Max discount amount:</label>
+      <input type="number" id="maxDiscount" name="maxDiscount">
+
+ <label for="discountPercentage">Discount Percentage:</label>
+      <select name="discountPercentage" id="discountPercentage">
+        <option value="">Select Discount</option>
+        <option value="10">10%</option>
+        <option value="20">20%</option>
+        <option value="30">30%</option>
+        <option value="40">40%</option>
+        <option value="50">50%</option>
+        <option value="60">60%</option>
+      </select> 
+
+      <button type="submit">Add Coupon</button>
+    </form>
+  </div>
+
+  <!-- Include the Fetch polyfill for older browsers -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js"></script>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('coupon-generate').addEventListener('click', function (e) {
+        e.preventDefault();
+        fetch('/admin/generate-coupon', {
+          method: 'POST',
+          // Send an empty object or adjust this part based on what your '/admin/generate-coupon' endpoint expects
+          body: JSON.stringify({}),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Coupon generated successfully:', data);
+          document.getElementById('code').value = data.coupon;
+        })
+        .catch(error => {
+          console.error('Error generating coupon:', error);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+</body>
+</html>

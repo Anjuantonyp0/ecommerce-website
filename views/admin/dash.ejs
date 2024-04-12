@@ -1,0 +1,163 @@
+<%- include('../partials/admin/adminHeader.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1648px; 
+            margin: 0 auto; 
+            padding: 20px;
+        }
+        section { 
+            background-color: #eee; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 20px;
+        }
+        canvas { 
+            max-width: 100%; 
+            border-radius: 10px; 
+        }
+        h1 { 
+            margin-bottom: 20px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard</h1>
+        
+        <section>
+            <br>
+            <h2>Top 5 Products</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="myChart1"></canvas>
+                            </div>
+                            <h2>Top 10 Brands</h2>
+
+                <div class="col-md-4">
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="myChart3"></canvas>
+                            </div>
+
+                 <div class="col-md-4">
+                    <canvas id="myChart4"></canvas>
+                </div> 
+            </div>
+        </section>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // Chart 1 (Doughnut)
+        new Chart(document.getElementById('myChart1').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ["SAREE", "KURTHIES", "WESTERNS","LEHANKA"],
+                datasets: [{
+                    data: ['10', '20', '30','25'], // Sample data
+                    backgroundColor: [
+                        'rgb(255, 39, 30)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)',
+                        'rgb(255, 99, 132)',
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false
+            }
+        });
+
+        // Chart 2 (Bar)
+     new Chart(document.getElementById('myChart2').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ["Banita", "Karshi", "Adrika", "Abhisarika", "Aakarsha", "Amazing", "Beatiful", "Trendy", "TrendyVonguish","comfy"],
+
+                datasets: [{
+                    data: [30, 40, 35, 50, 49, 60, 70, 91, 125,45],
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        // 'rgb(153, 102, 255)',
+                        // 'rgb(255, 159, 64)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false
+            }
+        });
+
+        // Chart 3 (Line)
+        new Chart(document.getElementById('myChart3').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ["RETURNED ORDERS", "CANCELED ORDERS", "DELIVERED ORDERS", "TOTAL ORDERS"],
+                datasets: [{
+                    data: ['20', '40', '60', '80'], // Sample data
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false
+            }
+        });
+
+        // // Chart 4 (Radar)
+        // new Chart(document.getElementById('myChart4').getContext('2d'), {
+        //     type: 'bar',
+        //     data: {
+        //         labels: ["RETURNED ORDERS", "CANCELED ORDERS", "DELIVERED ORDERS", "TOTAL ORDERS"],
+        //         datasets: [{
+        //             data: ['25', '45', '65', '85'], // Sample data
+        //             fill: true,
+        //             backgroundColor: [
+        //                 'rgb(255, 99, 132)',
+        //                 'rgb(153, 102, 255)',
+        //                 'rgb(255, 159, 64)'
+        //             ], 
+        //             borderWidth: 1,
+                   
+        //             borderColor: 'rgb(255, 99, 132)',
+        //             pointBackgroundColor: 'rgb(255, 99, 132)',
+        //             pointBorderColor: '#fff',
+        //             pointHoverBackgroundColor: '#fff',
+        //             pointHoverBorderColor: 'rgb(255, 99, 132)'
+        //         }]
+        //     },
+        //     options: {
+        //         maintainAspectRatio: false
+        //     }
+        // });
+    </script>
+</body>
+</html>

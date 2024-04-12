@@ -1,0 +1,92 @@
+<%- include('../partials/admin/adminHeader') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category Management Edit Page</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 1em;
+      text-align: center;
+    }
+
+    section {
+      max-width: 600px;
+      margin: 2em auto;
+      background-color: #fff;
+      padding: 2em;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5em;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 0.7em 1em;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Category Management Edit Page</h1>
+  </header>
+
+  <section>
+    <form action="/admin/update-category/<%= category._id %>" method="post">
+
+      <label for="categoryName">Category Name:</label>
+      <input type="text" id="categoryName" name="categoryName" value=" <%= category.categoryName %>" required>
+
+      <!-- <label for="categoryDescription">Category Description:</label>
+      <textarea id="categoryDescription" name="categoryDescription" rows="4" required><% category.description %></textarea> -->
+
+      <button type="submit">Save Changes</button>
+    </form>
+    <h4 style="color: red;"><%= editCat %></h4>
+  </section>
+</body>
+</html>

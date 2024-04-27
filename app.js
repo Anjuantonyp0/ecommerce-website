@@ -17,10 +17,7 @@ const { Product } = require('./models/productSchema');
 
 try {
   
-mongoose.connect('mongodb://127.0.0.1:27017/firstProject', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect("mongodb://Anju:1234@ac-udihzh8-shard-00-00.zodvl39.mongodb.net:27017,ac-udihzh8-shard-00-01.zodvl39.mongodb.net:27017,ac-udihzh8-shard-00-02.zodvl39.mongodb.net:27017/?ssl=true&replicaSet=atlas-qeg9v1-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0");
 console.log("db connected")
 } catch (error) {
   console.log(error.message)

@@ -97,6 +97,9 @@ router.post("/verify/:userId", userSessionCheck, verifyOtp);
 
 router.post('/loginVerify', loginVerify);
 
+router.get('/logout', logout)
+
+
 router.use(blockChecker);
 router.get('/home', home);
 
@@ -106,7 +109,6 @@ router.get('/product-detail', productDetail)
 
 router.get('/category-list', categoryList);
 
-router.get('/logout', logout)
 
 router.get('/profile', profile)
 

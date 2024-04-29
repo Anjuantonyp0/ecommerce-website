@@ -76,10 +76,10 @@
                         <i class="fa fa-star"></i>
                     </div>
                     <% if(product.orginalPrice > 0) { %>
-                    <div class="product__details__price">MRP price: -- ₹ <%= product.orginalPrice %></div>
-                    <div class="product__details__price">Offer price: -- ₹ <%= product.price %></div>
+                    <div class="product__details__price">MRP price:  ₹ <%= product.orginalPrice %></div>
+                    <div class="product__details__price">Offer price:  ₹ <%= product.price %></div>
                     <% } else { %>
-                    <div class="product__details__price">MRP price: -- ₹ <%= product.price %></div>
+                    <div class="product__details__price">MRP price:  ₹ <%= product.price %></div>
                     <% } %>
                     <p><%= product.description %></p>
                     <div class="product__details__button">

@@ -60,7 +60,7 @@
         }
     </style>
 </head>
-<body>
+<body><br><br><br><br><br><br>
     <h1>Order Management</h1>
     <section style="background-color: #eee;">
 
@@ -108,7 +108,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ orderId: orderId, orderStatus: 'Shipped' }) // Change 'Shipped' to the desired status
+            body: JSON.stringify({ orderId: orderId, orderStatus: 'Shipped' }) 
         })
         .then(response => {
             if (!response.ok) {

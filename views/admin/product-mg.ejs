@@ -69,7 +69,7 @@
     <title>Product Management</title>
 </head>
 
-<body>
+<body><br><br><br><br><br><br>
     <h1>Product Management</h1>
 
     <section style="background-color: #eee;">
@@ -95,7 +95,7 @@
                     <% product.forEach(prod => { %>
                     <tr>
                         <td>
-                            <img src="/uploads/<%= prod.image[0].url %>" class="w-50" />
+                            <img src="/uploads/<%= prod.image[0]?.url %>" class="w-50" />
                         </td>
 
                         <td class="pt-5"><%= prod.name %></td>

@@ -11,7 +11,7 @@
                     <ul class="d-flex justify-content-center">
                         <li><a href="/home">Home</a></li>
                         <li><a href="/shop">Shop</a></li>
-                        <% category.forEach(cat => { %>
+                        <% category?.forEach(cat => { %>
                             <li><a href="/category-list?id=<%= cat._id %>"><%= cat.categoryName %></a></li>
                         <% }) %>
                     </ul>

@@ -3,7 +3,8 @@ const Product = require("../models/productSchema");
 const { User } = require("../models/userSchema");
 
 
-// -----------LOGIN PAGE RENDERING --------------------->
+// --------------------------------------------------LOGIN PAGE RENDERING ---------------------------------------------------------------->
+
 module.exports.loginPage = (req, res) => {
     try {
       res.render("admin/login");
@@ -14,7 +15,8 @@ module.exports.loginPage = (req, res) => {
 };
 
 
-// -----------DASHBOARD PAGE RENDERING ----------------->
+// ---------------------------------------------------DASHBOARD PAGE RENDERING ----------------------------------------------------------->
+
 module.exports.loginController = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -32,7 +34,8 @@ module.exports.loginController = async (req, res) => {
 };
 
 
-// -----------DASHBOARD PAGE RENDERING ----------------->
+// ----------------------------------------------------DASHBOARD PAGE RENDERING ---------------------------------------------------------->
+
 module.exports.dashboard = async(req, res) => {
     try {
         const returnedOrders = await Order.find({ returned: true }).countDocuments();
@@ -80,7 +83,8 @@ module.exports.dashboard = async(req, res) => {
 };
 
 
-// -----------DASHBOARD PAGE RENDERING ----------------->
+// ----------------------------------------------------DASHBOARD PAGE RENDERING ---------------------------------------------------------->
+
 module.exports.deactivatedUser = async (req, res) => {
     const userId = req.params.id;
   try {
@@ -94,7 +98,8 @@ module.exports.deactivatedUser = async (req, res) => {
 };
 
 
-// -----------USER MANAGEMENT RENDERING ----------------->
+// ------------------------------------------------------USER MANAGEMENT RENDERING ------------------------------------------------------->
+
 module.exports.userManagment = async (req, res) => {
     try {
       const user = await User.find({});
@@ -106,7 +111,8 @@ module.exports.userManagment = async (req, res) => {
 };
 
 
-// -----------USER BLOCK RENDERING ----------------->
+// -------------------------------------------------------USER BLOCK RENDERING ----------------------------------------------------------->
+
 module.exports.userBlock = async (req, res) => {
     try {
       const id = req.params.id;
@@ -122,7 +128,8 @@ module.exports.userBlock = async (req, res) => {
 };
 
 
-// -----------USER UNBLOCK RENDERING ----------------->
+// -----------------------------------------------------USER UNBLOCK RENDERING ----------------------------------------------------------->
+
 module.exports.userUnBlock = async (req, res) => {
     try {
       const id = req.params.id;
@@ -137,7 +144,8 @@ module.exports.userUnBlock = async (req, res) => {
 };
 
 
-// ----------- LOGOUT PAGE  RENDERING ----------------->
+// ----------------------------------------------------- LOGOUT PAGE  RENDERING ---------------------------------------------------------->
+
 module.exports.adminLogout = async (req, res) => {
     try {
       req.session.admin_id = null; 
@@ -148,7 +156,8 @@ module.exports.adminLogout = async (req, res) => {
 };
 
 
-// -----------CHART DATA RENDERING ----------------->
+// -------------------------------------------------------CHART DATA RENDERING ----------------------------------------------------------->
+
 module.exports.chartData = async (req, res) => {
     try {
     const orderData = await Order.aggregate([

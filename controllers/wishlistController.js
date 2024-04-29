@@ -17,12 +17,20 @@ const getCategory = async function () {
   }
 };
 
-//////////////////////////////////////////////////////////////////user side///////////////////////////////////////
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== user  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//--------------------------------------------------------- PRODUCTT ADD TO WISHLIST-----------------------------------------------=>
+
 module.exports.productAddToWishlist = async (req, res) => {
     try {
       const prodId = req.params.id;
       const userId = req.session.user._id;
-  
       const wishlist = await Wishlist.findOne({ userId: userId });
       const existingProduct = wishlist
         ? wishlist.items.find((item) => item.product == prodId)
@@ -60,6 +68,9 @@ module.exports.productAddToWishlist = async (req, res) => {
       res.status(500).send("Internal Server Error"); // Add a proper error response
     }
 };
+
+
+//--------------------------------------------------------- RENDERING WISHLIST PAGE-------------------------------------------------------=>
   
 module.exports.wishlistPage = async (req, res) => {
     try {
@@ -81,6 +92,9 @@ module.exports.wishlistPage = async (req, res) => {
     }
 };
   
+
+//--------------------------------------------------------- REMOVE WISHLIST PRODUCT AND REDIRECT TO WISHLIST----------------------------=>
+
 module.exports.removeWishlistProduct = async (req, res) => {
     try {
       const id = req.session.user._id;
@@ -104,7 +118,10 @@ module.exports.removeWishlistProduct = async (req, res) => {
       console.log(error.message);
     }
 };
- 
+
+
+//--------------------------------------------------------- WISHLIST TO CART AND REDIRECT WISHLIST--------------------------------------=>
+
 module.exports.wishlistToCart = async (req, res) => {
   try {
     const prodId = req.params.id;
@@ -177,6 +194,8 @@ module.exports.wishlistToCart = async (req, res) => {
   }
 };
 
+
+//--------------------------------------------------------- REMOVE WISHLIST ITEM---------------------------------------------------------=>
 
 module.exports.removeWishlistItem = async (req, res) => {
   try {

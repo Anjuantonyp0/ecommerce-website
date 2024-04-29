@@ -19,9 +19,9 @@ const getCategory = async (req, res) => {
 
     try {
 
-        const categories = await Category.find({ active: true });
-
-        if (categories.length > 0) {
+        const categories = await Category.find({  });
+        console.log('got the catogory')
+        if (categories) {
 
             return categories;
 
@@ -36,7 +36,18 @@ const getCategory = async (req, res) => {
     }
 }
 
-  // Find and update coupons that have expired
+// console.log(
+// getCategory()
+
+// )
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== USER  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//---------------------------------------------- FIND AND UPDATE COUPONS THAT HAVE EXPIRED--------------------------------------------->
+ 
   const checkAndUpdateExpiredCoupons = async () => {
     try {
         const currentDate = new Date();
@@ -58,7 +69,9 @@ const getCategory = async (req, res) => {
         console.error("Error checking and updating expired coupons:", error);
     }
   };
-//--------------------- RENDERING SIGNUP PAGE--------------------------=>
+
+
+//--------------------------------------------------------- RENDERING SIGNUP PAGE-------------------------------------------------------=>
 
 module.exports.signupPage = (req, res) => {
 
@@ -80,7 +93,8 @@ module.exports.signupPage = (req, res) => {
     }
 }
 
-//......................... Replace with the actual path to your User model..........................>
+
+//--------------------------------------------------------- RENDERING OTP PAGE-------------------------------------------------------=>
 
 module.exports.signup = async (req, res) => {
 
@@ -89,7 +103,7 @@ module.exports.signup = async (req, res) => {
         const { name, email, phone, password } = req.body;
 
 
-        //................................... check if the email already exists..............................>
+        //... check if the email already exist.....>
 
         const checkEmail = await User.findOne({ email: email });
 
@@ -167,6 +181,10 @@ module.exports.signup = async (req, res) => {
     }
 
 }
+
+
+//---------------------------------------------------------GET OTP PAGE-------------------------------------------------------=>
+
 module.exports.otpPage = async (req, res) => {
     try {
 
@@ -181,7 +199,10 @@ module.exports.otpPage = async (req, res) => {
         res.status(500).json({ error: "An error occurred while rendering otp page." });
     }
 }
-// .................otp verification....................=>
+
+
+//--------------------------------------------------------- OTP VERIFCATION-------------------------------------------------------=>
+
 module.exports.verifyOtp = async (req, res) => {
     try {
 
@@ -199,7 +220,11 @@ module.exports.verifyOtp = async (req, res) => {
         console.log(error.message)
     }
 };
-//...................REndering Login page.........................=>
+
+
+
+//--------------------------------------------------------- RENDERING LOGIN PAGE-------------------------------------------------------=>
+
 module.exports.loginPage = (req, res) => {
     try {
 
@@ -209,7 +234,10 @@ module.exports.loginPage = (req, res) => {
         console.log(error.message)
     }
 }
-//.....................verifyLogin...............................=>
+
+
+
+//--------------------------------------------------------- VERIFY LOGIN --------------------------------------------------------------=>
 module.exports.loginVerify = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password.toString();
@@ -229,7 +257,11 @@ module.exports.loginVerify = async (req, res) => {
         console.log(error.message)
     }
 }
-//.................REndering homePage................................=>
+
+
+
+//--------------------------------------------------------- RENDERING HOME PAGE-------------------------------------------------------=>
+
 module.exports.home = async (req, res) => {
 
     try {
@@ -238,13 +270,17 @@ module.exports.home = async (req, res) => {
         const banner = await Banner.find({});``
 
         const products = await Product.find().limit(8);
-        console.log(products)
+        console.log("This is the cat daata ====>>>",category)
         res.render('user/homePage', {products: products, banners: banner, user: user, category })
         
     } catch (error) {
         console.log(error.message)
     }
 }
+
+
+//--------------------------------------------------------- RENDERING SHOP PAGE-------------------------------------------------------=>
+
 module.exports.shop = async (req, res) => {
 
     try {
@@ -256,6 +292,10 @@ module.exports.shop = async (req, res) => {
         console.log(error.message)
     }
 }
+
+
+//--------------------------------------------------------- RENDERING PROFILE PAGE-------------------------------------------------------=>
+
 module.exports.profile = async (req, res) => {
     try {
         const id = req.session.user;
@@ -279,6 +319,10 @@ module.exports.profile = async (req, res) => {
 
     }
 }
+
+
+//--------------------------------------------------------- RENDERING EDIT PROFILE PAGE-------------------------------------------------------=>
+
 module.exports.editProfile = async (req, res) => {
     try {
         const id = req.session.user._id;
@@ -298,6 +342,10 @@ module.exports.editProfile = async (req, res) => {
         console.log(error.message)
     }
 }
+
+
+//--------------------------------------------------------- UPDATE AND REDIRECT INTO PROFILE PAGE---------------------------------------=>
+
 module.exports.updateProfile = async (req, res) => {
     try {
         const id = req.session.user._id;
@@ -321,6 +369,10 @@ module.exports.updateProfile = async (req, res) => {
         console.log(error.message)
     }
 }
+
+
+//--------------------------------------------------------- ADD ADDRESS AND REDIRECT TO PROFILE-------------------------------------------------------=>
+
 module.exports.addAddress = async (req, res) => {
     try {
         // Assuming you have a middleware to parse the request body, like body-parser or express.json
@@ -371,11 +423,19 @@ module.exports.addAddress = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+//--------------------------------------------------------- RENDERING ADD ADDRESS PAGE---------------------------------------------------=>
+
 module.exports.addressAdd = async (req, res) => {
     const category = await Category.find({ active: true });
 
     res.render('user/addAddress',{category});
 }
+
+
+//--------------------------------------------------------- RENDERING EDIT ADDRESS PAGE-------------------------------------------------------=>
+
 module.exports.editAddressPage = async (req, res) => {
     try {
         const addressId = req.params.id;
@@ -393,6 +453,10 @@ module.exports.editAddressPage = async (req, res) => {
         res.status(500).send('internal Srver Error')
     }
 }
+
+
+//---------------------------------------------------------UPDATE ADDRESS AND REDIRECT INTO PROFILE-------------------------------------=>
+
 module.exports.updateAddress = async (req, res) => {
     try {
         const id = req.session.user._id;
@@ -426,6 +490,7 @@ module.exports.updateAddress = async (req, res) => {
 }
 
 
+//--------------------------------------------------------- DELETE AND REDIRECT TO PROFILE----------------------------------------------=>
 
 module.exports.deleteAddress = async (req,res) =>{
     
@@ -442,7 +507,6 @@ if(!deleteAddress){
             return res.status(400).json({message:'Address not found'});
 
         }else{
-        // return res.status(200).json({message:'Address deleted successfully'});
         res.redirect('/profile')
         }
     }catch(error){
@@ -450,6 +514,11 @@ if(!deleteAddress){
         return res.status(500).json({message:'internal server error'})
     }
 }
+
+
+
+//--------------------------------------------------------- RENDERING CHANGE PASSWORD PAGE-------------------------------------------------------=>
+
 module.exports.changePasswordPage = async (req, res) => {
     try {
         const id = req.session.user._id;
@@ -468,6 +537,10 @@ module.exports.changePasswordPage = async (req, res) => {
         console.log(error.message)
     }
 }
+
+
+//--------------------------------------------------------- CHANGE PASSWORD AND REDIRECT TO PROFILE-------------------------------------=>
+
 module.exports.changePassword = async (req, res) => {
     try {
         const id = req.session.user._id;
@@ -500,6 +573,10 @@ module.exports.changePassword = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+//--------------------------------------------------------- RENDERING VIEW ORDER DETAILES----------------------------------------------=>
+
 module.exports.vieworderdetails = async (req, res) => {
     try {
         //constorderId = req.params.orderid;
@@ -523,52 +600,58 @@ module.exports.vieworderdetails = async (req, res) => {
 };
 
 
+//--------------------------------------------------------- CHECKOUT------------------------------------------------------------------=>
 
-module.exports.checkoutp = async (req, res) => {
-    try {
-        const userId = req.session.user._id;
-        const cart = await Cart.findOne({ userId }).populate('items.product');
-        let totalAmount = 0;
-        const orderDetails = {
-            userId: userId,
-            items: [],
-            totalPrice: 0,
-        };
-        for (const cartItem of cart.items) {
-            const product = cartItem.product;
-            const quantity = cartItem.quantity;
+// module.exports.checkoutp = async (req, res) => {
+//     try {
+//         const userId = req.session.user._id;
+//         const cart = await Cart.findOne({ userId }).populate('items.product');
+//         let totalAmount = 0;
+//         const orderDetails = {
+//             userId: userId,
+//             items: [],
+//             totalPrice: 0,
+//         };
+//         for (const cartItem of cart.items) {
+//             const product = cartItem.product;
+//             const quantity = cartItem.quantity;
 
-            // Assuming there is a 'price' property in the Product model
-            const productPrice = product.price;
+//             // Assuming there is a 'price' property in the Product model
+//             const productPrice = product.price;
 
-            // Calculate subtotal for each item
-            const subtotal = productPrice * quantity;
+//             // Calculate subtotal for each item
+//             const subtotal = productPrice * quantity;
 
-            // Update total amount and add item to order details
-            totalAmount += subtotal;
-            orderDetails.items.push({
-                product: product._id,
-                quantity: quantity,
-                subtotal: subtotal,
-            });
-        }
+//             // Update total amount and add item to order details
+//             totalAmount += subtotal;
+//             orderDetails.items.push({
+//                 product: product._id,
+//                 quantity: quantity,
+//                 subtotal: subtotal,
+//             });
+//         }
 
-        // Update the total price in the order details
-        orderDetails.totalPrice = totalAmount;
+//         // Update the total price in the order details
+//         orderDetails.totalPrice = totalAmount;
 
-        // You can save the order details to a separate Order model or process it as needed
-        // ...
+//         // You can save the order details to a separate Order model or process it as needed
+//         // ...
 
-        // Clear the user's cart after placing the order
-        await Cart.findOneAndUpdate({ userId }, { $set: { items: [], totalPrice: 0 } });
+//         // Clear the user's cart after placing the order
+//         await Cart.findOneAndUpdate({ userId }, { $set: { items: [], totalPrice: 0 } });
 
-        // Send a response to the client
-        res.status(200).json({ message: 'Order placed successfully', orderDetails });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-}
+//         // Send a response to the client
+//         res.status(200).json({ message: 'Order placed successfully', orderDetails });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// }
+
+
+
+//--------------------------------------------------------- REDIRECT TO LOGOUT-------------------------------------------------------=>
+
 module.exports.logout = (req, res) => {
     try {
         req.session.user = null

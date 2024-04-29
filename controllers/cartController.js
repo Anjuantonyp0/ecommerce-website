@@ -6,12 +6,13 @@ const { Address } = require("../models/addressSchema");
 const { userSessionCheck } = require("../middlewares/middleware");
 const Wallet = require("../models/walletSchema");
 
-// -------------------------------------------------------------
-// =========================== USER  SIDE======================>
-// -------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== USER  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
-// -----------PRODUCT ADD TO CART ----------------->
+
+// ---------------------------------------------------------PRODUCT ADD TO CART --------------------------------------------------------->
 module.exports.productAddToCart = async (req, res) => {
   try {
     const prodId = req.params.id;
@@ -75,7 +76,7 @@ module.exports.productAddToCart = async (req, res) => {
 };
 
 
-// -----------CART PAGE RENDERING ----------------->
+// ----------------------------------------------------------CART PAGE RENDERING---------------------------------------------------------->
 module.exports.cartPage = async (req, res) => {
   try {
     const userId = req.session.user._id;
@@ -95,7 +96,7 @@ module.exports.cartPage = async (req, res) => {
 };
 
 
-// -----------DELETE CART ITEM ----------------->
+// -----------------------------------------------------------DELETE CART ITEM ----------------------------------------------------------->
 module.exports.removeCartItem = async (req, res) => {
   try {
     const id = req.params.id;
@@ -120,7 +121,7 @@ module.exports.removeCartItem = async (req, res) => {
 }
 
 
-// -----------CHECKOUT PAGE RENDERING ----------------->
+// ---------------------------------------------------------CHECKOUT PAGE RENDERING ------------------------------------------------------>
 module.exports.checkout = async (req, res) => {
   try {
     const userId = req.session.user._id;
@@ -139,7 +140,7 @@ module.exports.checkout = async (req, res) => {
 }
 
 
-// -----------DASHBOARD PAGE RENDERING ----------------->
+// ----------------------------------------------------------DASHBOARD PAGE RENDERING ---------------------------------------------------->
 module.exports.changeAddress = async (req, res) => {
   try {
       // Assuming you have a middleware to parse the request body, like body-parser or express.json
@@ -184,14 +185,14 @@ module.exports.changeAddress = async (req, res) => {
 };
 
 
-// -----------ADDRESS CHANGE RENDERING ----------------->
+// -----------------------------------------------------------ADDRESS CHANGE RENDERING --------------------------------------------------->
 module.exports.addressChange = async (req, res) => {
   const category = await Category.find({ active: true });
   res.render('user/changeAddress',{category});
 }
 
 
-// -----------CHECKOUT ADDRESS CHANGE RENDERING ----------------->
+// -------------------------------------------------------CHECKOUT ADDRESS CHANGE RENDERING ---------------------------------------------->
 module.exports.updateAddressChange = async (req, res) => {
   try {
       const id = req.session.user._id;
@@ -222,7 +223,7 @@ module.exports.updateAddressChange = async (req, res) => {
 }
 
 
-// -----------QUANTITY UPDATE ----------------->
+// --------------------------------------------------------QUANTITY UPDATE --------------------------------------------------------------->
 module.exports.updateQuantity = async (req, res) => {
   try {
     const userId = req.session.user._id;

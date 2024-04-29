@@ -124,10 +124,10 @@
                                             <div class="label bg-danger">Out of stock</div>
                                         <% } %>
                                         <ul class="product__hover">
-                                            <li><a href="img/shop/shop-1.jpg" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                            <li><a href="uploads/<%= item.image[0].url %>" class="image-popup"><span class="arrow_expand"></span></a></li>
                                             <li><a href="/add-wishlist/<%= item._id %>" id="addToWhishlist"><i class="fa-solid fa-heart"></i></a></li>
                                             <% if(item.stock > 0) { %>
-                                                <li><a href="#"><span class="icon_bag_alt"></span></a></li>
+                                                <li><a href="/addToCart/<%= item._id %>"id=" productAddToCart"><i class="icon_bag_alt"></i></a></li>
                                             <% } %>
                                         </ul>
                                     </div>

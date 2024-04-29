@@ -3,6 +3,15 @@ const { Category } = require("../models/categorySchema");
 const Order= require('../models/orderSchema'); 
 const Product = require('../models/productSchema');
 
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== ADMIN  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// ------------------------------------------------------------RENDER SALES REPORT PAGE------------------------------------------------>
+
 module.exports.salesReportPage = async (req, res) => {
   try {
     const category = await Category.find({ active: true });
@@ -14,6 +23,9 @@ module.exports.salesReportPage = async (req, res) => {
     console.log('try catch error in salesreportpage');
   }
 };
+
+
+// ------------------------------------------------------------SALES REPORT------------------------------------------------------------->
 
 module.exports.salesReport = async (req, res) => {
   try {
@@ -49,8 +61,6 @@ orders.forEach((order) => {
     items.push(item.product);
   });
 });
-
-// console.log(items);
 
     const averageOrderValue = totalOrders > 0 ? Math.ceil(totalSales / totalOrders) : 0;
 

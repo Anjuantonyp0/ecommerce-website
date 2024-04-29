@@ -28,15 +28,17 @@ const getCategory = async (req, res) => {
 
 
 
-// -------------------------------------------------------------
-// =========================== USER  SIDE======================>
-// -------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== USER  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
 
-// -----------CHECKOUT----------------->
+
+
+// -----------------------------------------------------------CHECKOUT-------------------------------------------------------------------->
 module.exports.checkoutAjaxAddress = async (req, res) => {
     try {
         const addressId = req.body.selectedAddress;
@@ -79,7 +81,7 @@ module.exports.checkoutAjaxAddress = async (req, res) => {
 };
 
 
-// -----------VERIFY PAYMENT ----------------->
+// -----------------------------------------------------------VERIFY PAYMENT ------------------------------------------------------------->
 module.exports.verifyPayment = async (req, res) => {
   try {
       const details = req.body;
@@ -107,7 +109,7 @@ module.exports.verifyPayment = async (req, res) => {
 };
 
 
-// -----------PAYMENT CHECKOUT----------------->
+// ------------------------------------------------------------PAYMENT CHECKOUT----------------------------------------------------------->
 module.exports.PaymentCheckout = async(req,res)=>{
   try {
       const orderId = req.body.orderId;
@@ -126,7 +128,7 @@ module.exports.PaymentCheckout = async(req,res)=>{
     }
 }
 
-// -----------PAYMENT CHECKOUT----------------->  
+// -------------------------------------------------------------PAYMENT CHECKOUT---------------------------------------------------------->  
 module.exports.paymentfailed = async(req,res)=>{
   try {
     const id = req.params.id;
@@ -144,7 +146,7 @@ module.exports.paymentfailed = async(req,res)=>{
 };
 
 
-// -----------ORDER SUCCESS PAGE RENDERING----------------->
+// --------------------------------------------------------ORDER SUCCESS PAGE RENDERING--------------------------------------------------->
 module.exports.placeorder = async (req, res) => {
     try {
       const order = await Order.findById(req.params.id).populate('items.product');
@@ -169,7 +171,7 @@ module.exports.placeorder = async (req, res) => {
 };
 
 
-// -----------VIEW ORDER DETAILS----------------->
+// ---------------------------------------------------------VIEW ORDER DETAILS------------------------------------------------------------>
 module.exports.vieworderdetails = async (req, res) => {
     try {
         const category = await Category.find({ active: true });
@@ -189,7 +191,7 @@ module.exports.vieworderdetails = async (req, res) => {
 };
 
 
-// -----------VIEW ORDER DETAILS----------------->
+// --------------------------------------------------------VIEW ORDER DETAILS------------------------------------------------------------>
 module.exports.SingleOrderDetail = async (req, res) => {
     try {
         const orderId = req.params.id;
@@ -204,7 +206,7 @@ module.exports.SingleOrderDetail = async (req, res) => {
 }
 
 
-// -----------CANCEL ORDER----------------->
+// --------------------------------------------------------CANCEL ORDER------------------------------------------------------------------->
 module.exports.orderCancel = async (req, res) => {
     try {
         const userId = req.session.user._id;
@@ -242,7 +244,7 @@ module.exports.orderCancel = async (req, res) => {
 };
 
 
-// -----------RETURN REQUEST----------------->
+// ---------------------------------------------------------RETURN REQUEST---------------------------------------------------------------->
 module.exports.returnRequest = async (req, res) => {
   try {
     const id = req.params.id;
@@ -261,7 +263,7 @@ module.exports.returnRequest = async (req, res) => {
 };
 
 
-// -----------WALLET PAGE RENDERING----------------->
+// -----------------------------------------------------------WALLET PAGE RENDERING------------------------------------------------------->
 module.exports.walletPage = async (req, res) => {
     try {
       const userId = req.session.user._id;
@@ -283,7 +285,7 @@ module.exports.walletPage = async (req, res) => {
 };
 
 
-// -----------WALLET USAGE----------------->
+// ------------------------------------------------------------WALLET USAGE--------------------------------------------------------------->
 module.exports.walletUsage = async (req, res) => {
   try {
     const orderId = req.params.id;
@@ -309,7 +311,7 @@ module.exports.walletUsage = async (req, res) => {
 };
 
 
-// -----------INVOICE DOWNLOADING--------------->
+// --------------------------------------------------------------INVOICE DOWNLOADING----------------------------------------------------->
 module.exports.invoiceDownload= async (req, res) => {
   try {
   
@@ -334,17 +336,16 @@ module.exports.invoiceDownload= async (req, res) => {
 
 
 
-// -------------------------------------------------------------
-// =========================== USER  SIDE======================>
-// -------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== ADMIN  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
 
 
-
-// -----------ORDER MANAGEMENT IN ADMIN SIDE--------------->
+// ----------------------------------------------------------ORDER MANAGEMENT IN ADMIN SIDE----------------------------------------------->
 module.exports.orderManagement =  async (req, res) => {
     try {
       const order = await Order.find().populate('items.product').sort({_id: -1});
@@ -359,7 +360,10 @@ module.exports.orderManagement =  async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
    };
-   module.exports.viewdetails = async (req, res) => {
+
+
+// ----------------------------------------------------------VIEW ORDER DETAILS RENDERING------------------------------------------------->
+module.exports.viewdetails = async (req, res) => {
     const orderId = req.params.orderId;
 
     // Retrieve order details based on the order ID
@@ -373,7 +377,9 @@ module.exports.orderManagement =  async (req, res) => {
     // Render a view with the order details
     res.render('admin/viewDetails', { order });
 };
- module.exports.changeOrderItemStatus = async(req,res)=>{
+
+
+module.exports.changeOrderItemStatus = async(req,res)=>{
 //     try {
 // const{ProductId,OrderId,newStatus,customerId,paymentStatus} = req.body
 
@@ -392,8 +398,11 @@ module.exports.orderManagement =  async (req, res) => {
 //       res.status(500).json({ status: false, message: 'An unexpected error occurred.' });
 
 //     }
-   }
- module.exports.changeOrderStatus = async (req, res) => {
+}
+
+
+// -------------------------------------------------------------CHANGE ORDER STATUS------------------------------------------------------->
+module.exports.changeOrderStatus = async (req, res) => {
     try {
       const orderId = req.body.orderId;
       const orderStatus = req.body.orderStatus;
@@ -422,7 +431,10 @@ module.exports.orderManagement =  async (req, res) => {
       console.log(error.message);
       res.status(500).send('Internal Server Error');
     }
-  };
+};
+
+
+// --------------------------------------------------------------UPDATE ORDER STATUS------------------------------------------------------>
 module.exports.updateOrderStatus = async (req, res) => {
     try {
         const orderId = req.body.orderId;
@@ -454,6 +466,9 @@ module.exports.updateOrderStatus = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
+
+
+// ---------------------------------------------------------------RETURN APPROVAL--------------------------------------------------------->
 module.exports.returnApprovel = async (req, res) => {
   try {
       const id = req.params.id;
@@ -543,7 +558,7 @@ module.exports.returnApprovel = async (req, res) => {
 };
 
 
-
+// ------------------------------------------------------------ORDER MANAGEMENT IN ADMIN SIDE--------------------------------------------->
 module.exports.orderPagination = async (req, res) => {
     try {
         const { page, pageSize } = req.body;

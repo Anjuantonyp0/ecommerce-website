@@ -1,6 +1,7 @@
 const { Category } = require("../models/categorySchema");
 const { Product } = require("../models/productSchema");
 const { User } = require("../models/userSchema");
+let editCat = ''
 
 const getCategory = async (req, res) => {
   try {
@@ -15,12 +16,16 @@ const getCategory = async (req, res) => {
   }
 };
 
-// -----------------------------ADMIN SIDE ---------------------------------//
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== ADMIN  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
 
-let editCat = ''
 
-module.exports = {
-  productMg: async (req, res) => {
+
+
+// ------------------------------------------------------------PRODUCT MANAGEMENT IN ADMIN SIDE------------------------------------------>
+
+  module.exports.productMg = async (req, res) => {
     try {
       const product = await Product.find().populate('category');
       console.log("Product: ", product);
@@ -29,9 +34,12 @@ module.exports = {
       console.log(error.message);
     }
   },
-  addProduct: async (req, res) => {
+
+
+// ------------------------------------------------------ADD PRODUCT AND REDIRECT TO PRODUCT MANAGEMENT -------------------------------->
+
+  module.exports.addProduct = async (req, res) => {
     try {
-      console.log(req.body);
 
       const image = req.files.map((file) => ({ url: file.filename }));
 
@@ -55,18 +63,23 @@ module.exports = {
       console.log(error.message);
     }
   },
-  categoryMg: async (req, res) => {
+
+
+// --------------------------------------------------------CATEGORY MANAGEMENT IN ADMIN SIDE-------------------------------------------->
+
+  module.exports.categoryMg = async (req, res) => {
     try {
       const category = await Category.find();
-   
-
-     
       res.render("admin/category-mg", { category: category, message: '' });
     } catch (error) {
       console.log(error.message);
     }
   },
-  updateCategory: async (req, res) => {
+
+
+// ----------------------------------------------CATEGORY UPDATE AND REDIRECT TO CATEGORY MANAGEMENT------------------------------------>
+
+  module.exports.updateCategory =  async (req, res) => {
     try {
       const catId = req.params.id;
       const category = await Category.findOne({ _id: catId });
@@ -95,7 +108,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  editCategory: async (req, res) => {
+
+
+  // ------------------------------------------------------------EDIT CATEGORY IN CATEGORY  MANAGEMENT --------------------------------->
+
+  module.exports.editCategory = async (req, res) => {
     try {
       const id = req.params.id;
 
@@ -112,7 +129,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  addCategory: async (req, res) => {
+
+
+  // ------------------------------------------------------------ADD CATEGORY IN CATEGORY MANAGEMENT ----------------------------------->
+
+  module.exports.addCategory =  async (req, res) => {
     try {
       const existingCategory = await Category.findOne({
         categoryName: req.body.category,
@@ -143,7 +164,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  addProductPage: async (req, res) => {
+
+
+  // ----------------------------------------------------------ADD PRODUCT PAGE IN PRODUCT MANAGEMENT----------------------------------->
+
+  module.exports.addProductPage = async (req, res) => {
     try {
       const category = await Category.find({});
       res.render("admin/add-product-page", { category: category });
@@ -151,7 +176,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  EditProductPage: async (req, res) => {
+
+
+  // ------------------------------------------------------------EDIT PRODUCT IN PRODUCT MANAGEMENT ------------------------------------->
+
+  module.exports.EditProductPage = async (req, res) => {
     try {
       const id = req.params.id;
       if (!id) {
@@ -162,9 +191,6 @@ module.exports = {
       if (!product) {
         res.status(404).send("Product not found");
       }
-
-      // console.log(categories)
-
       res.render("admin/editProductPage", {
         title: "Edit User",
         product: product,
@@ -175,7 +201,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  updateProduct: async (req, res) => {
+
+
+  // ------------------------------------------------------------UPDATE PRODUCT AND REDIRECT PRODUCT MANAGEMENT -------------------------->
+
+  module.exports.updateProduct = async (req, res) => {
     try {
       const name = req.body.name;
       const category = req.body.category; // Ensure that this is a valid ObjectId
@@ -213,7 +243,11 @@ module.exports = {
       res.status(500).send("Internal Server Error");
     }
   },
-  deleteProduct: async (req, res, next) => {
+
+
+  // --------------------------------------------------------DELETE PRODUCT AND REDIRECT INTO PRODUCT MANAGEMENT ------------------------->
+
+  module.exports.deleteProduct = async (req, res, next) => {
     try {
       const id = req.params.id;
 
@@ -233,7 +267,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  categoryActivate: async (req, res) => {
+
+
+  // ----------------------------------------------------CATEGORY ACTIVATE AND REDIRECT INTO CATEGORY MANAGEMENT------------------------->
+
+  module.exports.categoryActivate =  async (req, res) => {
     try {
       const id = req.params.id;
 
@@ -255,7 +293,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  categoryDeactivate: async (req, res) => {
+
+
+  // -------------------------------------------------CATEGORY DEACTIVATE AND REDIRECT INTO CATEGORY MANAGEMENT-------------------------->
+
+  module.exports.categoryDeactivate = async (req, res) => {
     try {
       const id = req.params.id;
 
@@ -277,7 +319,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  categoryDelete: async (req, res) => {
+
+
+   // -------------------------------------------------CATEGORY DELETE AND REDIRECT INTO CATEGORY MANAGEMENT-------------------------->
+ 
+  module.exports.categoryDelete = async (req, res) => {
     try {
       const id = req.params.id;
   
@@ -300,7 +346,11 @@ module.exports = {
       console.log(error.message);
     }
   },
-  addCategoryOffer: async (req, res) => {
+
+
+    // -------------------------------------------------ADD CATEGORY OFFER AND REDIRECT CATEGORY MANAGEMENT-------------------------->
+
+  module.exports.addCategoryOffer =  async (req, res) => {
     try {
       const { category, offer } = req.body;
       console.log(req.body.category);
@@ -343,9 +393,16 @@ module.exports = {
   }
   
   
-};
 
-// ---------------------------------------------USER SIDE =----------------------------------------------------------------------|>
+
+// ---------------------------------------------------------------------------------------------------------------------------------------
+// =========================================================== USER  SIDE===============================================================>
+// ---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+// -------------------------------------------------RENDER PRODUCT LIST ----------------------------------------------------------------->
 
 module.exports.categoryList = async (req, res) => {
   try {
@@ -358,6 +415,9 @@ module.exports.categoryList = async (req, res) => {
   }
 };
 
+
+// -------------------------------------------------RENDER PRODUCT DETAIL-------------------------------------------------------------->
+
 module.exports.productDetail = async (req, res) => {
   try {
     const id = req.query.id;
@@ -368,6 +428,9 @@ module.exports.productDetail = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+// -------------------------------------------------FILTER PRODUCT FETCH---------------------------------------------------------------->
 
 module.exports.filterProductAjax = async (req, res) => {
   try {
@@ -447,6 +510,9 @@ module.exports.filterProductAjax = async (req, res) => {
   }
 };
 
+
+// -------------------------------------------------PRODUCT SEARCH----------------------------------------------------------------------->
+
 module.exports.productSearch = async (req, res) => {
   try {
     let payload = req.body.payload.trim();
@@ -464,7 +530,10 @@ module.exports.productSearch = async (req, res) => {
   }
 };
 
-module.exports.productPaginate =  async (req, res) => {
+
+// -------------------------------------------------PAGINATION IN PRODUCT----------------------------------------------------------------->
+
+  module.exports.productPaginate =  async (req, res) => {
   try {
     const { page, pageSize } = req.body;
     console.log(page, pageSize)
@@ -480,6 +549,10 @@ module.exports.productPaginate =  async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error'});
 }
 };
+
+
+// -------------------------------------------------PRODUCT SORT------------------------------------------------------------------------->
+
 module.exports.productSort= async (req, res) => {
   try {
     const sortOption = req.query.sort || 'name'; 

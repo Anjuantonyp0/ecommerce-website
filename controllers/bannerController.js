@@ -14,7 +14,7 @@ const getCategory = async function () {
   };
 
 
-// -----------BANNER RENDERING ----------------->
+// --------------------------------------------------BANNER RENDERING -------------------------------------------------------------------->
 module.exports.addBannerPage = async(req,res)=>{
     try {
         const banner = await Banner.find();
@@ -27,7 +27,7 @@ module.exports.addBannerPage = async(req,res)=>{
 }
 
 
-// -----------BANNER LIST RENDERING ----------------->
+// -------------------------------------------------BANNER LIST RENDERING ---------------------------------------------------------------->
 module.exports.bannerList = async(req,res)=>{
     try {
         const banner = await Banner.find();
@@ -39,7 +39,7 @@ module.exports.bannerList = async(req,res)=>{
 }
 
 
-// -----------ADD BANNER ----------------->
+// -------------------------------------------------ADD BANNER --------------------------------------------------------------------------->
 module.exports.addBanner = async (req, res) => {
     try {
         if (!req.file) {
@@ -61,7 +61,7 @@ module.exports.addBanner = async (req, res) => {
 };
 
 
-// -----------DELETE BANNER ----------------->
+// --------------------------------------------------DELETE BANNER ----------------------------------------------------------------------->
 module.exports.deleteBanner = async(req,res)=>{
     try {
         const id = req.params.id;

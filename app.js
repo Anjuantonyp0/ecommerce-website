@@ -17,7 +17,7 @@ const { Product } = require('./models/productSchema');
 
 try {
   
-mongoose.connect("mongodb://Anju:1234@ac-udihzh8-shard-00-00.zodvl39.mongodb.net:27017,ac-udihzh8-shard-00-01.zodvl39.mongodb.net:27017,ac-udihzh8-shard-00-02.zodvl39.mongodb.net:27017/?ssl=true&replicaSet=atlas-qeg9v1-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0");
+mongoose.connect("mongodb://Anju:1234@ac-udihzh8-shard-00-00.zodvl39.mongodb.net:27017,ac-udihzh8-shard-00-01.zodvl39.mongodb.net:27017,ac-udihzh8-shard-00-02.zodvl39.mongodb.net:27017/firstProject?ssl=true&replicaSet=atlas-qeg9v1-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0");
 console.log("db connected")
 } catch (error) {
   console.log(error.message)

@@ -95,7 +95,7 @@
                     <% product.forEach(prod => { %>
                     <tr>
                         <td>
-                            <img src="/uploads/<%= prod.image[0].url %>" class="w-50" />
+                            <img src="/uploads/<%= prod.image[0]?.url %>" class="w-50" />
                         </td>
 
                         <td class="pt-5"><%= prod.name %></td>

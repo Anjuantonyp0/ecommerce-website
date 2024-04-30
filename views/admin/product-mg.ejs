@@ -100,7 +100,7 @@
 
                         <td class="pt-5"><%= prod.name %></td>
                         <td class="pt-5"><%= prod.description %></td>
-                        <td class="pt-5"><%= prod.category.categoryName %></td>
+                        <td class="pt-5"><%= prod.category ? prod.category.categoryName : 'N/A' %></td>
                         <td class="pt-5"><%= prod.stock %></td>
                         <td class="pt-5">₹<%= prod.price %></td>
                         <td class="pt-5 action-btns">

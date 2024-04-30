@@ -183,7 +183,7 @@ module.exports.vieworderdetails = async (req, res) => {
         }
             console.log(order.items + "😂😂😂😂😂😂😂😂👍👍👍")
         // Render the order details page with the retrieved order
-        res.render('user/vieworders', { order: order, user: userId, category: category });
+        res.render('user/orders', { order: order, user: userId, category: category });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

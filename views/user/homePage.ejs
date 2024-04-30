@@ -40,9 +40,9 @@
     <!-- Header Section End -->
 
     <!-- Banner Section Begin -->
-    <a href="/category-list?id=<%= category[2]._id %>">
+    <a href="/category-list?id=<%= category[2]?._id %>">
         <div class="container" style="width: 100%;">
-            <img src="/banner/<%= banners[1].image %>" alt="Banner Image" class="banner__image">
+            <img src="/banner/<%= banners[1]?.image %>" alt="Banner Image" class="banner__image">
         </div>
     </a>
     <br>
@@ -62,7 +62,7 @@
                 <a href="/product-detail?id=<%= item._id %>">
                     <div class="col-lg-3 col-md-4 col-sm-6 mix women">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="uploads/<%= item.image[0].url %>">
+                            <div class="product__item__pic set-bg" data-setbg="uploads/<%= item.image[0]?.url %>">
                                 <div class="label new">New</div>
                             </div>
                             <div class="product__item__text">

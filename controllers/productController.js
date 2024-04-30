@@ -208,29 +208,43 @@ const getCategory = async (req, res) => {
 
   module.exports.updateProduct = async (req, res) => {
     try {
-      const { name, category, price, stock, description } = req.body;
-      const images = req.files.map(file => ({ url: file.filename }));
-  
-      const existingProduct = await Product.findById(req.params.id);
-      if (!existingProduct) {
-        return res.status(404).send("Product not found");
+      const name = req.body.name;
+      const category = req.body.category; // Ensure that this is a valid ObjectId
+      const price = req.body.price;
+      const stock = req.body.stock;
+      const description = req.body.description;
+      const images = [];
+
+      if (req.files && req.files.length > 0) {
+        req.files.forEach((file) => {
+          images.push({ url: file.filename });
+        });
       }
-  
-      existingProduct.name = name;
-      existingProduct.category = category;
-      existingProduct.price = price;
-      existingProduct.stock = stock;
-      existingProduct.description = description;
-      existingProduct.image = images.length > 0 ? images : existingProduct.image;
-  
-      const updatedProduct = await existingProduct.save();
+
+      const existingProduct = await Product.findById(req.params.id);
+
+      const productData = await Product.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: {
+            name: name,
+            price: price,
+            description: description,
+            category: category,
+            stock: stock,
+            image: images.length > 0 ? images : existingProduct.image,
+          },
+        }
+      );
+
       res.redirect("/admin/product-mg");
     } catch (error) {
       console.log(error.message);
+      // Handle the error appropriately, e.g., send an error response to the client
       res.status(500).send("Internal Server Error");
     }
-  };
-  
+  },
+
 
   // --------------------------------------------------------DELETE PRODUCT AND REDIRECT INTO PRODUCT MANAGEMENT ------------------------->
 

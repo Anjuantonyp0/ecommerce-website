@@ -100,15 +100,15 @@
 
                         <td class="pt-5"><%= prod.name %></td>
                         <td class="pt-5"><%= prod.description %></td>
-                        <td class="pt-5"><%= prod.category && prod.category.categoryName ? prod.category.categoryName : 'N/A' %></td>
+                        <td class="pt-5"><%= prod.category.categoryName %></td>
                         <td class="pt-5"><%= prod.stock %></td>
                         <td class="pt-5">₹<%= prod.price %></td>
                         <td class="pt-5 action-btns">
                             <a href="/admin/edit-product/<%= prod._id %>" class="btn btn-primary">Edit</a>
-                            <a href="javascript:void(0);" class="btn btn-danger" onclick="confirmDelete('<%= prod._id %>')">Delete</a>
+                            <a href="javascript:void(0);" class="btn btn-danger"
+                                onclick="confirmDelete('<%= prod._id %>')">Delete</a>
+                                
                         </td>
-                        
-
                     </tr>
                     <% }) %>
                     <% }else{ %>

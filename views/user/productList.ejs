@@ -114,25 +114,25 @@
                 <div class="col-lg-12 col-md-12">
                     <div class="row">
                         <% product.forEach(item => { %>
-                        <a href="/product-detail?id=<%= item._id %>">
+                        <a href="/product-detail?id=<%= item?._id %>">
                             <div class="col-lg-4 col-md-6">
                                 <div class="product__item">
-                                    <div class="product__item__pic set-bg" data-setbg="uploads/<%= item.image[0]?.url %>">
-                                        <% if(item.stock > 0) { %>
+                                    <div class="product__item__pic set-bg" data-setbg="uploads/<%= item?.image[0]?.url %>">
+                                        <% if(item?.stock > 0) { %>
                                             <div class="label new">In stock</div>
                                         <% } else { %>
                                             <div class="label bg-danger">Out of stock</div>
                                         <% } %>
                                         <ul class="product__hover">
-                                            <li><a href="uploads/<%= item.image[0]?.url %>" class="image-popup"><span class="arrow_expand"></span></a></li>
-                                            <li><a href="/add-wishlist/<%= item._id %>" id="addToWhishlist"><i class="fa-solid fa-heart"></i></a></li>
-                                            <% if(item.stock > 0) { %>
-                                                <li><a href="/addToCart/<%= item._id %>"id=" productAddToCart"><i class="icon_bag_alt"></i></a></li>
+                                            <li><a href="uploads/<%= item?.image[0]?.url %>" class="image-popup"><span class="arrow_expand"></span></a></li>
+                                            <li><a href="/add-wishlist/<%= item?._id %>" id="addToWhishlist"><i class="fa-solid fa-heart"></i></a></li>
+                                            <% if(item?.stock > 0) { %>
+                                                <li><a href="/addToCart/<%= item?._id %>"id=" productAddToCart"><i class="icon_bag_alt"></i></a></li>
                                             <% } %>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
-                                        <h6><a href="#"><%= item.name %></a></h6>
+                                        <h6><a href="#"><%= item?.name %></a></h6>
                                         <div class="rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -140,7 +140,7 @@
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                         </div>
-                                        <div class="product__price">₹ <%= item.price %></div>
+                                        <div class="product__price">₹ <%= item?.price %></div>
                                     </div>
                                 </div>
                             </div>

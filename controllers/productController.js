@@ -408,8 +408,10 @@ const getCategory = async (req, res) => {
 module.exports.categoryList = async (req, res) => {
   try {
     const id = req.query.id;
-    const product = await Product.find({ category: id }).populate("category");
+    console.log(id + "😘😘😘😘😘😘");
+    const product = await  Product.find({ category: id }).populate("category");
     const category = await getCategory();
+    // console.log(product)
     res.render("user/productList", { product: product, category });
   } catch (error) {
     console.log(error.message);

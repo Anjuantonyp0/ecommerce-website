@@ -181,9 +181,9 @@ module.exports.vieworderdetails = async (req, res) => {
         if (!order) {
             console.log("no order is available....")
         }
-            console.log(order.items)
+            console.log(order.items + "😂😂😂😂😂😂😂😂👍👍👍")
         // Render the order details page with the retrieved order
-        res.render('user/viewOrders', { order: order, user: userId, category: category });
+        res.render('user/vieworders', { order: order, user: userId, category: category });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

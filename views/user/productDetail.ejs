@@ -76,7 +76,7 @@
                         <i class="fa fa-star"></i>
                     </div>
                     <% if(product.orginalPrice > 0) { %>
-                    <div class="product__details__price">MRP price:  ₹ <%= product.orginalPrice %></div>
+                    <div class="product__details__price" style="text-decoration: line-through;">MRP price:  ₹ <%= product.orginalPrice %></div>
                     <div class="product__details__price">Offer price:  ₹ <%= product.price %></div>
                     <% } else { %>
                     <div class="product__details__price">MRP price:  ₹ <%= product.price %></div>
@@ -176,13 +176,13 @@
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/jquery.nicescroll.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js" 
-    integrity="sha384-JUMjoW8OzDJw4oFpWIB2Bu/c6768ObEthBMVSiIx4ruBIEdyNSUQAjJNFqT5pnJ6" 
-    crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha384-JUMjoW8OzDJw4oFpWIB2Bu/c6768ObEthBMVSiIx4ruBIEdyNSUQAjJNFqT5pnJ6" crossorigin="anonymous"></script>
     <script src="Stylish-Magnifying-Glass-Plugin-SergeLand-Image-Zoomer/zoomsl.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha384-JUMjoW8OzDJw4oFpWIB2Bu/c6768ObEthBMVSiIx4ruBIEdyNSUQAjJNFqT5pnJ6" crossorigin="anonymous"></script>
+<script src="Stylish-Magnifying-Glass-Plugin-SergeLand-Image-Zoomer/zoomsl.min.js"></script>
     <script>
         $(document).ready(function($){
+            
         $('.small-images img').click(function(){
         var image = $(this).attr('src');
         $('.big-image img').attr('src', image);
@@ -192,6 +192,7 @@
         });
         });
     </script>
+    
   
   
 

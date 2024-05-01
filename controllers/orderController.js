@@ -154,13 +154,33 @@ module.exports.placeorder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
-      
+
+      //   const products = await Product.find({}); 
+
+      //   // Loop through each item in the order
+      //   order.items.forEach((placedItem) => {
+      //     const productToUpdate = products.find((prod) => prod._id.toString() === placedItem._id.toString());
+        
+      //     if (productToUpdate) {
+      //       productToUpdate.stock--; // Decrement the stock of the product
+      //     }
+      //   });
+        
+        
+      //  const done = await Promise.all(products.map((prod) => prod.save())); 
+        
+      // if(done){
+      //   console.log("product stock decreased 👍👍👍👍👍👍👍👍👍👍👍👍👍👍");
+      // }
+
+      console.log(order + "😊😊😊😊");
       
       const id = req.session.user._id;
       console.log(id);
       const deleteCart = await Cart.deleteOne({userId: id});
       if(deleteCart){
-        res.render('user/orderSuccessPage', { order });
+        const category = await Category.find({ active: true });
+        res.render('user/orderSuccessPage', { order, category: category });
       }else{
         console.log("deletion of cart has failed");
       }
